@@ -1,0 +1,51 @@
+.usamap {
+    left: 400px;
+    top: 100px;
+    position: absolute;
+}
+
+.radiogroup1 {
+    left: 200px;
+    top: 100px;
+    position: absolute;
+}
+.radio1 {
+    top: 310px;
+    left: 1540px;
+    position: relative;
+  }
+.radio2 {
+    top: 535px;
+    left: 220px;
+    position: relative;
+  }
+.radio3 {
+    top: 330px;
+    left: 965px;
+    position: relative;
+  }
+.radio4 {
+    top: 840px;
+    left: 1160px;
+    position: relative;
+  }
+.radio5 {
+    top: 765px;
+    left: 600px;
+    position: relative;
+  }
+.radio6 {
+    top: 390px;
+    left: -230px;
+    position: relative;
+  }
+.radio7 {
+    top: 392px;
+    left: 877px;
+    position: relative;
+  }
+.carousel {
+  bottom: 10%;
+  right: 5%;
+  position: absolute;
+}

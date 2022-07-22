@@ -1,0 +1,8 @@
+.trip {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.tripmap {
+    bottom: 40%;
+    right: 10%;
+    position: absolute;
+}

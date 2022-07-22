@@ -1,0 +1,36 @@
+@import '~antd/dist/antd.css';
+@import "./styles/App.css";
+@import "./styles/Main.css";
+@import "./styles/PageHeader.css";
+@import "./styles/PageFooter.css";
+@import "./styles/HomePage.css";
+@import "./styles/Login.css";
+@import "./styles/WhatsHot.css";
+@import "./styles/PlanTrip.css";
+@import "./styles/ManageTrip.css";
+@import "./styles/SearchPOI.css";
+@import "./styles/Recommendations.css";
+@import "./styles/DrawPoints.css";
+@import "./styles/POIDetailInfoButton.css";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  font-size: inherit;
+  color: currentColor;
+}
