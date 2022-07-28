@@ -1,3 +1,10 @@
+npm install react-icons --save 
+npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
+npm i -S @react-google-maps/api
+
+https://react-google-maps-api-docs.netlify.app/
+https://developers.google.com/maps/documentation/javascript/directions
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
