@@ -5,7 +5,6 @@ import {GOOG_API_KEY, GDIR_BASE_URL} from "../constants";
 import update from 'immutability-helper';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import axios from 'axios';
 
 const type = 'DraggableBodyRow';
 
@@ -171,7 +170,7 @@ const columns = [
         // .catch(error => {
         //     console.log('err in fetch map -> ', error);
         // })
-      });
+      },[data]);
 
       const processUrl = () => {
         var newurl = GDIR_BASE_URL
