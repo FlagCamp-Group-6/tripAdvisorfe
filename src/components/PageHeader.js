@@ -3,6 +3,7 @@ import { Layout, Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import tripadvisor_logo from '../images/owl-bird-eyes-eagle-owl-86596.jpeg';
 import Login from "./Login";
+import Logo  from '../assets/icons/Logo.svg';
 
 const { Header } = Layout;
 
@@ -17,11 +18,9 @@ class PageHeader extends Component {
       );
     render() {
         return (
-            <Header style={{ display: "flex", justifyContent: "space-between", height:"80px"}}>
-                <img alt="logo" src={tripadvisor_logo} width="200" height="80"/> 
-            <div style={{ fontSize: 30, fontWeight: 600, color: "white"}}>
-            Trip Advisor For Now
-            </div>
+            <Header style={{ display: "flex", justifyContent: "justify", height:"75px"}}>
+               <img src={Logo} className="logo" alt="icon" />
+
             {this.props.auth && (
               <div>
                 <Dropdown trigger="click" overlay={this.userMenuOut}>

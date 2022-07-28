@@ -1,5 +1,4 @@
 .pointmap {
-    bottom: 40%;
-    right: 10%;
-    position: absolute;
+    margin-top: 30px;
+    position: relative;
 }

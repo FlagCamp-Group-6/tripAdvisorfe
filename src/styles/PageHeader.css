@@ -1,0 +1,10 @@
+.ant-layout-header {
+    height: 54px;
+    background:#35343f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    height: 30px;
+}

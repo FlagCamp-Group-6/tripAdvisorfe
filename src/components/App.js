@@ -60,8 +60,8 @@ class App extends React.Component {
         >
           {this.renderContent()}
         </Content>
-        <PageFooter />
         </Layout>
+        
     );
   }
 }

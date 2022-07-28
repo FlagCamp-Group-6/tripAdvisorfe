@@ -45,12 +45,9 @@ class SearchPOI extends React.Component {
    
     render() {
       return (
-        <div style={{ width: 500, margin: "20px auto"}}>
-            <p>
-            Search your favorite point of interest
-            </p>
+        <div style={{ width: 500}}>
           <Form ref={this.formRef} onFinish={this.onFinish}>
-            <Form.Item
+            <Form.Item 
               name="Location"
               rules={[
                 {
@@ -62,7 +59,7 @@ class SearchPOI extends React.Component {
               <Input
                 disabled={this.state.loading}
                 prefix={<EnvironmentOutlined className="site-form-item-icon" />}
-                placeholder="Location"
+                placeholder="Search your favorite point of interest"
               />
             </Form.Item>
             <Row>
@@ -93,11 +90,10 @@ class SearchPOI extends React.Component {
             </Row>
           </Form>
           <Space>
-            <Button
+            <Button className="search_button"
               onClick={this.handleSearch}
               disabled={this.state.loading}
               shape="round"
-              type="primary"
             >
               Search
             </Button>
