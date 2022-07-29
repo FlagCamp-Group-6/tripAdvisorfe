@@ -5,6 +5,9 @@ import {GOOG_API_KEY, GDIR_BASE_URL} from "../constants";
 import update from 'immutability-helper';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Map from './Map';
+import { ChakraProvider, theme } from '@chakra-ui/react'
+
 
 const type = 'DraggableBodyRow';
 
@@ -128,6 +131,8 @@ const columns = [
         longitude: -118.353378,
     },
     ]);
+
+
     const saveOnClick = () => {
         saveTrip(data)
         .catch((err) => {
@@ -218,8 +223,13 @@ const columns = [
     </Col>
     </Col>    
     <Col span={12} className="right-side">
-      <span>{url}</span>
+    <ChakraProvider theme={theme}>
+      <Map />
+    </ChakraProvider>
     </Col>
     </>
   )};
+
+  
+
 export default PlanTrip;

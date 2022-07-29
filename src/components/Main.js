@@ -17,7 +17,7 @@ class Main extends React.Component {
         beg_date: null,
         end_date: null,
     }
-}
+  }
   setTab1() {
     this.setState({
       activetab: 1,
