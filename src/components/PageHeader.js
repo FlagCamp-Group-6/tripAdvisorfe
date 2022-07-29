@@ -19,8 +19,10 @@ class PageHeader extends Component {
         return (
             <Header style={{ display: "flex", justifyContent: "space-between", height:"80px"}}>
                 <img alt="logo" src={tripadvisor_logo} width="200" height="80"/> 
-            <div style={{ fontSize: 30, fontWeight: 600, color: "white"}}>
-            Trip Advisor For Now
+                <div>
+            <span style={{ fontSize: 30, fontWeight: 600, color: "white"}}>
+              Trip Advisor </span> 
+              <span style={{ fontSize: 18, fontWeight: 600, color: "cyan"}}> The official travel site of the USA </span>
             </div>
             {this.props.auth && (
               <div>

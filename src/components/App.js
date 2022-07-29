@@ -4,6 +4,11 @@ import PageHeader from './PageHeader';
 import Main from './Main';
 import PageFooter from './PageFooter';
 import HomePage from "./HomePage";
+import { Routes, Route } from "react-router-dom";
+import ContactUs from "./ContactUs";
+import About from "./About";
+import TermOfUse from "./TermOfUse";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 const { Content } = Layout;
  
@@ -58,7 +63,15 @@ class App extends React.Component {
         <Content
           style={{ height: "calc(100% - 64px)", margin: 20, overflow: "auto" }}
         >
-          {this.renderContent()}
+            <Routes>
+            <Route path="/" element={this.renderContent()} /> 
+            <Route path="home" element={this.renderContent()} />
+            <Route path="about" element={<About />} />
+            <Route path="contactus" element={<ContactUs />} />
+            <Route path="termofuse" element={<TermOfUse />} />
+            <Route path="privacypolicy" element={<PrivacyPolicy />} />
+        </Routes>
+          {/* {this.renderContent()} */}
         </Content>
         <PageFooter />
         </Layout>

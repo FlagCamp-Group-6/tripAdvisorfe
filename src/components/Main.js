@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Typography } from "antd";
+import { Layout, Row, Typography, Space } from "antd";
 import { FireOutlined, CalendarOutlined, FileTextOutlined } from '@ant-design/icons';
 import WhatsHot from './WhatsHot'
 import PlanTrip from './PlanTrip'
@@ -17,7 +17,7 @@ class Main extends React.Component {
         beg_date: null,
         end_date: null,
     }
-}
+  }
   setTab1() {
     this.setState({
       activetab: 1,
@@ -62,6 +62,11 @@ class Main extends React.Component {
         }}
       >
         <Sider className="site-layout-background" width={200}>
+          <Space direction="vertical"
+          size="middle"
+          style={{
+          display: 'flex',
+          }}>
           {this.state.activetab===1 && (
             <>
             <div className="optionselected">
@@ -72,7 +77,6 @@ class Main extends React.Component {
               <FireOutlined />
               What's Hot
               </Typography.Title>
-              <div className="separator"></div>
               </>
           )}
           {this.state.activetab!==1 && (
@@ -85,7 +89,6 @@ class Main extends React.Component {
             <FireOutlined />
             What's Hot
             </Typography.Title>
-            <div className="separator"></div>
             </>
          )}
         {this.state.activetab===2 && (
@@ -98,7 +101,6 @@ class Main extends React.Component {
               <CalendarOutlined/>
               Plan My Trip
               </Typography.Title>
-              <div className="separator"></div>
               </>
           )}
         {this.state.activetab!==2 && (
@@ -111,7 +113,6 @@ class Main extends React.Component {
             <CalendarOutlined/>
             Plan My Trip
             </Typography.Title>
-            <div className="separator"></div>
             </>
         )}
         {this.state.activetab===3 && (
@@ -124,7 +125,6 @@ class Main extends React.Component {
                 <FileTextOutlined/>
               Manage Trip
               </Typography.Title>
-              <div className="separator"></div>
               </>
           )}
         {this.state.activetab!==3 && (
@@ -137,9 +137,9 @@ class Main extends React.Component {
               <FileTextOutlined/>
             Manage Trip
             </Typography.Title>
-            <div className="separator"></div>
             </>
         )}
+        </Space>
         </Sider>
         <Content
           style={{
