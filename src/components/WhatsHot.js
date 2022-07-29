@@ -18,7 +18,7 @@ class WhatsHot extends React.Component {
         updateSelection={this.props.updateSelection}
       />
       </Col>
-      <Col span={6} className="right-side">
+      <Col span={9} className="right-side">
           <DrawPoints selected={selected}/>
       </Col>
       </>

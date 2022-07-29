@@ -16,26 +16,26 @@ const PageFooter = () => {
                 <div>
                     <section id="wrapper">
                     <Col span={4} offset={4}>
-                        <h2>Help</h2>
+                        <h3>Help</h3>
                         <nav>         
-                        <h3><Link to="/about">About</Link></h3>
-                        <h3><Link to="/ContactUs">Contact us</Link> </h3>
-                        <h3><Link to="/TermOfUse">Term of use</Link> </h3>
-                        <h3><Link to="/PrivacyPolicy">Privacy policy</Link> </h3>
+                        <h4><Link to="/about">About</Link></h4>
+                        <h4><Link to="/ContactUs">Contact us</Link> </h4>
+                        <h4><Link to="/TermOfUse">Term of use</Link> </h4>
+                        <h4><Link to="/PrivacyPolicy">Privacy policy</Link> </h4>
                         </nav>
                     </Col>
                     <Col span={4}>
-                        <h2>Resources</h2>
-                        <h3><a href="https://www.visittheusa.com/">Visit the USA</a></h3>
-                        <h3><a href="https://www.tripadvisor.com/">Trip Advisor</a></h3>
-                        <h3><a href="https://www.expedia.com">Expedia</a></h3>
-                        <h3><a href="https://www.kayak.com">Kayak</a></h3>
+                        <h3>Resources</h3>
+                        <h4><a href="https://www.visittheusa.com/">Visit the USA</a></h4>
+                        <h4><a href="https://www.tripadvisor.com/">Trip Advisor</a></h4>
+                        <h4><a href="https://www.expedia.com">Expedia</a></h4>
+                        <h4><a href="https://www.kayak.com">Kayak</a></h4>
                     </Col>
                     <Col span={4}>
-                        <h2>Sponsors</h2>
-                        <h3><a href="https://www.laioffer.com/">Laioffer</a></h3>
-                        <h3><a href="https://www.purdue.edu/">Purdue University</a></h3>
-                        <h3><a href="https://www.northeastern.edu/">Northeastern University</a></h3>
+                        <h3>Sponsors</h3>
+                        <h4><a href="https://www.laioffer.com/">Laioffer</a></h4>
+                        <h4><a href="https://www.purdue.edu/">Purdue University</a></h4>
+                        <h4><a href="https://www.northeastern.edu/">Northeastern University</a></h4>
                     </Col>
                     <Col span={4}>
                     <a title="Facebook" data-track="click" data-type="social" target="_blank" href="https://facebook.com/tripadvisor" className="Anchor_complexLink_tas">

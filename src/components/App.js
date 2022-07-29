@@ -73,6 +73,7 @@ class App extends React.Component {
         </Routes>
           {/* {this.renderContent()} */}
         </Content>
+        <PageFooter />
         </Layout>
         
     );

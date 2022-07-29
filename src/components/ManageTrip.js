@@ -96,7 +96,7 @@ const ManageTrip = () => (
     }}
   />
   </Col>
-  <Col span={6} className="right-side">
+  <Col span={9} className="right-side">
     <p>
         Load trips from database (cannot just load POIs in case the user can adjust the route)                    
     </p>
