@@ -1,9 +1,11 @@
 import React from "react";
 import { Layout, Row, Typography, Space } from "antd";
-import { FireOutlined, CalendarOutlined, FileTextOutlined } from '@ant-design/icons';
 import WhatsHot from './WhatsHot'
 import PlanTrip from './PlanTrip'
 import ManageTrip from './ManageTrip'
+import whats_hot  from '../assets/icons/whats_hot.svg';
+import plan_trip  from '../assets/icons/plan_trip.svg';
+import manage_trip  from '../assets/icons/manage_trip.svg';
 
 const { Sider, Content} = Layout;
 
@@ -61,20 +63,15 @@ class Main extends React.Component {
           padding: '24px 0',
         }}
       >
-        <Sider className="site-layout-background" width={200}>
-          <Space direction="vertical"
-          size="middle"
-          style={{
-          display: 'flex',
-          }}>
+        <Sider className="site-layout-background" width={100}>
           {this.state.activetab===1 && (
             <>
             <div className="optionselected">
+            <img src={whats_hot} className="Nav_01" alt="icon" />
             </div>
               <Typography.Title
               level={3}
-              style={{margin: 0,color: "white"}}>
-              <FireOutlined />
+              style={{margin: 0}}>
               What's Hot
               </Typography.Title>
               </>
@@ -82,11 +79,11 @@ class Main extends React.Component {
           {this.state.activetab!==1 && (
             <>
         <div className="option" onClick={this.setTab1.bind(this)}> 
+        <img src={whats_hot} className="Nav_01" alt="icon" />
         </div>
             <Typography.Title
             level={3}
-            style={{margin: 0,color: "white"}}>
-            <FireOutlined />
+            style={{margin: 0}}>
             What's Hot
             </Typography.Title>
             </>
@@ -94,11 +91,11 @@ class Main extends React.Component {
         {this.state.activetab===2 && (
           <>
             <div className="optionselected">
+            <img src={plan_trip} className="Nav_02" alt="icon" />
             </div>
               <Typography.Title
               level={3}
-              style={{margin: 0,color: "white"}}>
-              <CalendarOutlined/>
+              style={{margin: 0}}>
               Plan My Trip
               </Typography.Title>
               </>
@@ -106,11 +103,11 @@ class Main extends React.Component {
         {this.state.activetab!==2 && (
           <>
         <div className="option" onClick={this.setTab2.bind(this)}> 
+        <img src={plan_trip} className="Nav_02" alt="icon" />
         </div>
             <Typography.Title
             level={3}
-            style={{margin: 0,color: "white"}}>
-            <CalendarOutlined/>
+            style={{margin: 0}}>
             Plan My Trip
             </Typography.Title>
             </>
@@ -118,11 +115,11 @@ class Main extends React.Component {
         {this.state.activetab===3 && (
           <>
             <div className="optionselected">
+            <img src={manage_trip} className="Nav_03" alt="icon" />
             </div>
               <Typography.Title
               level={3}
-              style={{margin: 0,color: "white"}}>
-                <FileTextOutlined/>
+              style={{margin: 0}}>
               Manage Trip
               </Typography.Title>
               </>
@@ -130,16 +127,15 @@ class Main extends React.Component {
         {this.state.activetab!==3 && (
         <>
         <div className="option" onClick={this.setTab3.bind(this)}> 
+        <img src={manage_trip} className="Nav_03" alt="icon" />
         </div>
             <Typography.Title
             level={3}
-            style={{margin: 0,color: "white"}}>
-              <FileTextOutlined/>
+            style={{margin: 0}}>
             Manage Trip
             </Typography.Title>
             </>
         )}
-        </Space>
         </Sider>
         <Content
           style={{

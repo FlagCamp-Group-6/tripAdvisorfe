@@ -9,7 +9,7 @@ class WhatsHot extends React.Component {
     const {POIList,selected}=this.props;
     return (
       <>
-      <Col span={12} className="left-side">
+      <Col span={13} className="left-side">
           <SearchPOI onShow={this.props.showNearbyPOI} />
           <table height="40px"></table>
           <Recommendations 
@@ -18,7 +18,7 @@ class WhatsHot extends React.Component {
         updateSelection={this.props.updateSelection}
       />
       </Col>
-      <Col span={12} className="right-side">
+      <Col span={6} className="right-side">
           <DrawPoints selected={selected}/>
       </Col>
       </>

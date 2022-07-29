@@ -2,8 +2,9 @@
   text-align: center;
   min-height: 100vh;
   overflow: hidden;
-  display: block;
+  display: flex;
   position: relative;
   padding-bottom: 5px;
+  font-family: Poppins;
  }
  

@@ -1,8 +1,28 @@
-.visit{
-    font-family: cursive;
+.left-side{
+    font-family: Poppins;
+    margin-right: 50px;
 }
 .linemap {
     bottom: 40%;
     right: 10%;
-    position: absolute;
+    position: relavtive;
+}
+.trip-save{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    background: #484751;
+    color: #ffffff;
+}
+.ant-table-thead{
+    background: #484751;
+}
+.ant-table {
+    box-sizing: border-box;
+    font-variant: tabular-nums;
+    position: relative;
+    font-size: 12px;
+    font-weight: light;
+    background: #fff;
+    border-radius: 2px;
 }

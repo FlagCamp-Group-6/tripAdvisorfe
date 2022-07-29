@@ -195,7 +195,12 @@ const columns = [
 
     return (
     <>
-    <Col span={12} className="left-side">
+    
+    <Col span={13} className="left-side">
+      <Button className="trip-save"
+      shape="round"
+      onClick={saveOnClick}
+      > Save Changes</Button>
     <DndProvider backend={HTML5Backend}>
       <Table
         className="visittable"
@@ -211,18 +216,8 @@ const columns = [
         }}
       />
     </DndProvider>
-    <table height="100px"></table>
-    <Col span="4" offset="20">
-    <Button
-    className="trip-save"
-    size="large"
-    shape="round"
-    type="primary"
-    onClick={saveOnClick}
-    > Save</Button>
-    </Col>
     </Col>    
-    <Col span={12} className="right-side">
+    <Col span={9} className="right-side">
     <ChakraProvider theme={theme}>
       <Map />
     </ChakraProvider>

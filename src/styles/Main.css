@@ -1,12 +1,40 @@
 .option {
-    width: 200px;
-    height: 200px;
-    background: rgb(0, 200, 255);
+    width: 90px;
+    height: 90px;
     cursor: pointer;
+    opacity: 0.4;
 }
 .optionselected {
-    width: 200px;
-    height: 200px;
-    background: rgb(0, 255, 200);
+    width: 90px;
+    height: 90px;
     cursor: pointer;
+    opacity: 1.0;
+}
+.separator {
+    width: 90px;
+    height: 60px;
+}
+
+h3.ant-typography{
+    margin-bottom: 0.5em;
+    color: #484751;
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    line-height: 1.35;
+}
+.site-layout-background{
+    margin-right: 30px;
+}
+.ant-layout-sider {
+    height: 100%;
+    padding-top: 10px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-width: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.2s;
+    font-family: Poppins;
 }

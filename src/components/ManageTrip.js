@@ -78,7 +78,7 @@ const data = [
 
 const ManageTrip = () => (
     <>
-    <Col span={12} className="left-side">
+    <Col span={13} className="left-side">
     <Table
     columns={columns}
     dataSource={data}
@@ -96,7 +96,7 @@ const ManageTrip = () => (
     }}
   />
   </Col>
-  <Col span={12} className="right-side">
+  <Col span={6} className="right-side">
     <p>
         Load trips from database (cannot just load POIs in case the user can adjust the route)                    
     </p>
