@@ -47,6 +47,8 @@ class SearchPOI extends React.Component {
       return (
         <div style={{ width: 500}}>
           <Form ref={this.formRef} onFinish={this.onFinish}>
+            <Row>
+            <Space>
             <Form.Item 
               name="Location"
               rules={[
@@ -62,8 +64,7 @@ class SearchPOI extends React.Component {
                 placeholder="Search your favorite point of interest"
               />
             </Form.Item>
-            <Row>
-                <Space>
+
             <Form.Item
               name="beg_date"
               rules={[

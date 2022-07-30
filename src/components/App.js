@@ -65,13 +65,11 @@ class App extends React.Component {
         >
             <Routes>
             <Route path="/" element={this.renderContent()} /> 
-            <Route path="home" element={this.renderContent()} />
             <Route path="about" element={<About />} />
             <Route path="contactus" element={<ContactUs />} />
             <Route path="termofuse" element={<TermOfUse />} />
             <Route path="privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
-          {/* {this.renderContent()} */}
         </Content>
         <PageFooter />
         </Layout>

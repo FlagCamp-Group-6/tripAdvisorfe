@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Layout, Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from 'react-router-dom';
 import Login from "./Login";
 import Logo  from '../assets/icons/Logo.svg';
 
@@ -18,8 +19,11 @@ class PageHeader extends Component {
     render() {
         return (
             <Header style={{ display: "flex", justifyContent: "justify", height:"75px"}}>
+              <nav>         
+                <Link to="/">
                <img src={Logo} className="logo" alt="icon" />
-
+               </Link>
+              </nav>
             {this.props.auth && (
               <div>
                 <Dropdown trigger="click" overlay={this.userMenuOut}>
