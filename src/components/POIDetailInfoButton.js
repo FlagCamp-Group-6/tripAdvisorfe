@@ -1,12 +1,11 @@
 import React from 'react';
-import { Modal, Tooltip, Space, Button, Checkbox } from 'antd';
+import { Modal, Tooltip, Space, Button } from 'antd';
 import { InfoCircleOutlined } from "@ant-design/icons";
 import Text from "antd/lib/typography/Text";
 
 class POIDetailInfoButton extends React.Component {
   state = {
     modalVisible: false,
-    checked: this.props.POI.used,
   };
  
   openModal = () => {
@@ -19,19 +18,11 @@ class POIDetailInfoButton extends React.Component {
     this.setState({
       modalVisible: false,
     });
-    this.props.change(this.props.POI,this.state.checked);
   };
  
-  onChange = (e) => {
-    console.log('checked = ', e.target.checked);
-    this.setState({
-        checked: e.target.checked,
-    })
-  };
-
   render() {
     const { POI } = this.props;
-    const { id, name, city, description, address, time_taken, used } = POI;
+    const { name, city, description, address, time_taken } = POI;
     const { modalVisible } = this.state;
     return (
       <>
@@ -46,7 +37,6 @@ class POIDetailInfoButton extends React.Component {
         {modalVisible && (
           <Modal
             title={<h3 className="detailtitle" >{name}
-              <Checkbox checked={this.state.checked} onChange={this.onChange}></Checkbox>
             </h3>}
             centered={true}
             visible={modalVisible}

@@ -145,7 +145,7 @@ class Main extends React.Component {
         >
             <Row className='main'>
               {this.state.activetab===1 && (
-              <WhatsHot POIList={POIList} selected={selected} updateSelection={this.updateSelection} oshotNearbyPOI={this.showNearbyPOI}/>
+              <WhatsHot POIList={POIList} selected={selected} updateSelection={this.updateSelection} showNearbyPOI={this.showNearbyPOI}/>
               )}
               {this.state.activetab===2 && (
                   <PlanTrip selected={selected}/>

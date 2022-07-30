@@ -1,11 +1,12 @@
 import React from 'react';
-import { message, List, Card, Image, Switch} from "antd";
+import { message, List, Card, Image, Checkbox, Switch, Space} from "antd";
 import Text from "antd/lib/typography/Text";
 import pic1 from '../images/LA/Academy-Museum-of-Motion-Pictures-01-B.jpg';
 import pic2 from '../images/LA/Griffith_Observatory,_Los_Angeles_2011.jpg';
 import pic3 from '../images/LA/universal-studios-hollywood.jpg';
 import pic4 from '../images/LA/Disneyland.jpg';
 import POIDetailInfoButton from './POIDetailInfoButton';
+import SelectPOI from './SelectPOI';
 import {getPOIbyCity} from '../utils';
 
 class Recommendations extends React.Component {
@@ -85,11 +86,11 @@ class Recommendations extends React.Component {
         }
       };
 
-      onChange = (POI,checked) => {
-        const { selected } = this.props;
+      onChange = (POI, checked) => {
         console.log(`changing ${POI.name} from ${POI.planned}`);
-        POI.planned =checked;
+        POI.planned = checked;
         console.log(`to ${POI.planned}`);
+        const { selected } = this.props;
         const list = this.addOrRemove(POI, selected);
         this.props.updateSelection(list);
     }
@@ -131,12 +132,12 @@ class Recommendations extends React.Component {
                       <Text ellipsis={true} style={{ maxWidth: 300 }}>
                         {item.name}
                       </Text>
-                      <POIDetailInfoButton POI={item} change={this.onChange} />
+                      <POIDetailInfoButton POI={item}/>
                     </div>
                   }
-                  cover={<Image src={item.image} width="100%" height="400px"/>}
+                  cover={<Image src={item.image} width="100%" height="350px"/>}
                   actions={[]}
-                  extra={<Switch checked={item.planned} />}
+                  extra={<SelectPOI POI={item} change={this.onChange}/>}
                 >
                 </Card>
               </List.Item>
