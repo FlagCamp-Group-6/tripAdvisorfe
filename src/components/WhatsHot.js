@@ -3,6 +3,9 @@ import { Col } from "antd";
 import SearchPOI from './SearchPOI';
 import Recommendations from './Recommendations'
 import DrawPoints from './DrawPoints'
+import Map from './Map';
+import { ChakraProvider, theme } from '@chakra-ui/react'
+import {GOOG_API_KEY, GDIR_BASE_URL} from "../constants";
 
 class WhatsHot extends React.Component {
   render() {
@@ -19,7 +22,9 @@ class WhatsHot extends React.Component {
       />
       </Col>
       <Col span={9} className="right-side">
-          <DrawPoints selected={selected}/>
+      <ChakraProvider theme={theme}>
+      <Map />
+      </ChakraProvider>
       </Col>
       </>
     )
