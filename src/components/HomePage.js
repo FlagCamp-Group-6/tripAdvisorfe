@@ -18,18 +18,17 @@ class HomePage extends React.Component {
   render() {
     
     return (
-        <>
+        <Row>
         <img src={usmap} alt="Have a nice trip" className="usamap" title="Where is your favoriate destination" width="1534" height="949" />
         <Radio.Group name="cities" defaultValue={1} onChange={this.radioChangeHandler} className="radiogroup1">
-            <Radio value={1} className='radio1'>New York</Radio>
-            <Radio value={2} className='radio2'>Los Angeles</Radio>
-            <Radio value={3} className='radio3'>Chicago</Radio>
-            <Radio value={4} className='radio4'>Miami</Radio>
-            <Radio value={5} className='radio5'>Houston</Radio>
-            <Radio value={6} className='radio6'>San Francisco</Radio>
-            <Radio value={7} className='radio7'>Washington D.C.</Radio>
+            <Radio value={1} className='radio1'><h3>New York</h3></Radio>
+            <Radio value={2} className='radio2'><h3>Los Angeles</h3></Radio>
+            <Radio value={3} className='radio3'><h3>Chicago</h3></Radio>
+            <Radio value={4} className='radio4'><h3>Miami</h3></Radio>
+            <Radio value={5} className='radio5'><h3>Houston</h3></Radio>
+            <Radio value={6} className='radio6'><h3>San Francisco</h3></Radio>
+            <Radio value={7} className='radio7'><h3>Washington D.C.</h3></Radio>
         </Radio.Group>
-        <Row>
           <Col className='carousel' xs={6} offset={18}>
           <Card title={<h1>These are international alpha cities in U.S. </h1>}>
           <Carousel autoplay vertical="true">
@@ -58,7 +57,6 @@ class HomePage extends React.Component {
           </Card>
           </Col>
           </Row>
-        </>
     );
   }
 }

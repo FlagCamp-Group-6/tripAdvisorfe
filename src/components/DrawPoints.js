@@ -5,7 +5,7 @@ class DrawPoints extends React.Component {
         super();
         this.state = {
             zoom: 10,
-            city: "Los_Angeles,CA",
+            city: "34.053713,-118.242815",
         };
     }
 

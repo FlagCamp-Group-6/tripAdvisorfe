@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Button, Input, Space, DatePicker, message, Row } from "antd";
+import { Form, Button, Input, Space, message, Row } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
-import { search } from "../utils";
+import { searchPOI } from "../utils";
 
 class SearchPOI extends React.Component {
     formRef = React.createRef();
@@ -27,13 +27,11 @@ class SearchPOI extends React.Component {
       });
    
       try {
-        await search({
-          beg_date: values.beg_date.format("YYYY-MM-DD"),
-          end_date: values.end_date.format("YYYY-MM-DD"),
-          place_name: values.Location,
+        const POIID = await searchPOI({
+          place_name: values.location,
         });
         message.success("Successfully searched POI");
-        this.props.onShow(values);
+        this.props.onShow(POIID);
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -46,11 +44,12 @@ class SearchPOI extends React.Component {
     render() {
       return (
         <div style={{ width: 500}}>
-          <Form ref={this.formRef} onFinish={this.onFinish}>
-            <Row>
-            <Space>
+          <Row>
+          <Space>
+          <Form 
+            ref={this.formRef} onFinish={this.onFinish}>
             <Form.Item 
-              name="Location"
+              name="location"
               rules={[
                 {
                   required: true,
@@ -59,46 +58,25 @@ class SearchPOI extends React.Component {
               ]}
             >
               <Input
+                style={{
+                  width: 666,
+                }}
+                size="large"
                 disabled={this.state.loading}
-                prefix={<EnvironmentOutlined className="site-form-item-icon" />}
+                prefix={<EnvironmentOutlined className="site-form-item-icon"/>}
                 placeholder="Search your favorite point of interest"
               />
             </Form.Item>
-
-            <Form.Item
-              name="beg_date"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your starting date!",
-                },
-              ]}
-            >
-              <DatePicker />
-            </Form.Item>
-            <Form.Item
-              name="end_date"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your ending date!",
-                },
-              ]}
-            >
-              <DatePicker />
-            </Form.Item>
-            </Space>
-            </Row>
           </Form>
-          <Space>
             <Button className="search_button"
               onClick={this.handleSearch}
               disabled={this.state.loading}
               shape="round"
             >
-              Search
+              Find POI
             </Button>
           </Space>
+          </Row>
         </div>
       );
     }

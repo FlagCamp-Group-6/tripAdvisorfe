@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Layout, Col, Row } from "antd";
+import { Layout, Col, Row, Space } from "antd";
 import { Link } from 'react-router-dom';
 import instagram_logo from '../images/social/Instagram_logo_2016.svg';
 import facebook_logo from '../images/social/Facebook_F_icon.svg';
@@ -40,6 +40,7 @@ const PageFooter = () => {
                 <Col span={8}>
                 <Row>
                 <Col span={12} offset={6}>
+                <Space>
                 <a title="Facebook" data-track="click" data-type="social" target="_blank" href="https://facebook.com/tripadvisor" className="Anchor_complexLink_tas">
                 {<img src={facebook_logo} style={{throwIfNamespace: false}} width="50" height="50"/>}
                 </a>
@@ -51,7 +52,8 @@ const PageFooter = () => {
                 </a>
                 <a title="Facebook" data-track="click" data-type="social" target="_blank" href="https://youtube.com/tripadvisor" className="Anchor_complexLink_tas">
                 {<img src={youtube_logo} width="50" height="50"/>}
-                </a>        
+                </a>      
+                </Space>  
                 </Col>
                 </Row>
                 <p></p>  

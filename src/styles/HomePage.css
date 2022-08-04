@@ -10,42 +10,42 @@
     position: absolute;
 }
 .radio1 {
-    top: 310px;
-    left: 1540px;
+    top: 305px;
+    left: 1545px;
     position: relative;
   }
 .radio2 {
-    top: 535px;
-    left: 220px;
+    top: 530px;
+    left: 215px;
     position: relative;
   }
 .radio3 {
-    top: 330px;
-    left: 965px;
+    top: 325px;
+    left: 940px;
     position: relative;
   }
 .radio4 {
-    top: 840px;
-    left: 1160px;
+    top: 860px;
+    left: 1125px;
     position: relative;
   }
 .radio5 {
-    top: 765px;
-    left: 600px;
+    top: 760px;
+    left: 560px;
     position: relative;
   }
 .radio6 {
     top: 390px;
-    left: -230px;
+    left: -290px;
     position: relative;
   }
 .radio7 {
-    top: 392px;
-    left: 877px;
+    top: 390px;
+    left: 805px;
     position: relative;
   }
 .carousel {
-  bottom: 20%;
+  bottom: 40%;
   right: 5%;
-  position: absolute;
+  position: fixed;
 }

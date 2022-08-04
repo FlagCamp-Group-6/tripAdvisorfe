@@ -45,12 +45,10 @@ export const register = (credential, asHost) => {
     })
   }
  
-  export const search = (query) => {
+  export const searchPOI = (query) => {
     const authToken = localStorage.getItem("authToken");
     const searchPOIUrl = new URL(`${domain}/search/`);
     searchPOIUrl.searchParams.append("name", query.place_name);
-    searchPOIUrl.searchParams.append("lat", 37);
-    searchPOIUrl.searchParams.append("lon", -122);
    
     return fetch(searchPOIUrl, {
       headers: {
@@ -58,7 +56,7 @@ export const register = (credential, asHost) => {
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to search trip");
+        throw Error("Fail to search POI");
       }
       return response.json();
     });
@@ -76,6 +74,26 @@ export const register = (credential, asHost) => {
       if (response.status !== 200) {
         throw Error("Fail to get points of interest");
       }
+      return response.json();
+    });
+  };
+
+  export const getTrip = (home,beg_date,end_date,selected) => {
+    const authToken = localStorage.getItem("authToken");
+    const getTripUrl = `${domain}/trips`;
+    console.log("build trip");
+    getTripUrl.searchParams.append("home",home);
+    getTripUrl.searchParams.append("start_date",beg_date);
+    getTripUrl.searchParams.append("end_date",end_date);
+    return fetch(getTripUrl, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(selected),
+    }).then((response) => {
+      if (response.status !== 200) {
+        throw Error("Fail to build trip");
+      }   
       return response.json();
     });
   };

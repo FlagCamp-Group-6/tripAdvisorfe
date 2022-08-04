@@ -50,7 +50,7 @@ class App extends React.Component {
 
   renderContent = () => {
     if (this.state.authed && this.state.city===2) {
-       return <Main />;
+       return <Main city={this.state.city}/>;
     }
  
     return <HomePage handleSelection={this.handleSelection} />;

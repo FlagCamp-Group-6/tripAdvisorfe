@@ -1,4 +1,6 @@
 .pointmap {
-    margin-top: 30px;
+    margin-top: 200px;
     position: relative;
+    width: 1000px;
+    height: 1000px;
 }

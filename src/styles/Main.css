@@ -10,10 +10,6 @@
     cursor: pointer;
     opacity: 1.0;
 }
-.separator {
-    width: 90px;
-    height: 60px;
-}
 
 h3.ant-typography{
     margin-bottom: 0.5em;
@@ -37,4 +33,7 @@ h3.ant-typography{
     background: rgba(0, 0, 0, 0);
     transition: all 0.2s;
     font-family: Poppins;
+}
+.main {
+    margin-bottom: 50px;
 }
