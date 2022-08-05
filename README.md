@@ -1,6 +1,3 @@
-test for pull
-
-
 npm install react-icons --save 
 npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
 npm i -S @react-google-maps/api
