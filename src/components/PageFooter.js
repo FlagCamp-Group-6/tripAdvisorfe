@@ -58,7 +58,7 @@ const PageFooter = () => {
                 </Row>
                 <p></p>  
                 <font size="3">
-                ©2022 TripAdvisor. All Rights Reserved. Website Made by Laioffer Project Spring Class 1 Flag Camp Group 6.
+                ©2022 TripPlanner. All Rights Reserved. Website Made by Laioffer Project Spring Class 1 Flag Camp Group 6.
                 </font>         
                 <p></p>     
                 </Col>

@@ -1,4 +1,4 @@
-import { Table, Col, Button, message } from 'antd';
+import { Table, Col, Button, Space, message } from 'antd';
 import { saveTrip } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import {GOOG_API_KEY, GDIR_BASE_URL} from "../constants";
@@ -90,6 +90,25 @@ const columns = [
       dataIndex: 'address',
       key: 'address',
       render: (text) => <h3 className="visit">{text}</h3>,
+    },
+    // Table.SELECTION_COLUMN,
+    {
+      title: 'Select to Skip',
+      key: 'select_to_skip',
+      render: (_, record) => (
+        <Space size="middle">
+          <Button type='primary'>Delete</Button>
+        </Space>
+      ),
+    },
+    {
+      title: 'Select to Show',
+      key: 'select_to_show',
+      render: (_, record) => (
+        <Space size="middle">
+          <Button type='primary' shape='round'>Show</Button>
+        </Space>
+      ),
     },
   ]
 
@@ -205,6 +224,7 @@ const columns = [
       <Table
         className="visittable"
         columns={columns}
+        rowSelection={{}}
         dataSource={data}
         components={components}
         onRow={(_, index) => {

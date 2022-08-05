@@ -291,6 +291,7 @@ class Recommendations extends React.Component {
               xxl: 2,
             }}
             dataSource={this.state.data}
+            // style={{maxHeight: 200, overflow: 'auto'}}
             renderItem={(item) => (
               <List.Item>
                 <Card
