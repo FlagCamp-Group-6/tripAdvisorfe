@@ -187,7 +187,7 @@ class Main extends React.Component {
         <Content
           style={{
             padding: '0px 24px',
-            minHeight: 2400,
+            minHeight: 5400,
           }}
         >
             <Row className="main">
