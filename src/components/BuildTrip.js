@@ -12,7 +12,7 @@ class BuildTrip extends React.Component {
       console.log("finish form");
     };
    
-    handleSearch = async (values) => {
+    handleSearch = async () => {
       const formInstance = this.formRef.current;
    
       try {
@@ -20,7 +20,7 @@ class BuildTrip extends React.Component {
       } catch (error) {
         return;
       }
-      this.props.buildTrip(values);
+      this.props.buildTrip(formInstance.getFieldsValue(true));
     };
    
     render() {

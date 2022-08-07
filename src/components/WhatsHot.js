@@ -12,9 +12,7 @@ class WhatsHot extends React.Component {
     return (
       <>
       <Col span={13} className="left-side">
-          <SearchPOI onShow={this.props.updatePOI} 
-            POIList={POIList}
-          />
+          <SearchPOI onShow={this.props.updatePOI}/>
           <table height="40px"></table>
           <Recommendations 
         POIList={POIList}

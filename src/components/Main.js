@@ -6,7 +6,7 @@ import ManageTrip from './ManageTrip'
 import whats_hot  from '../assets/icons/whats_hot.svg';
 import plan_trip  from '../assets/icons/plan_trip.svg';
 import manage_trip  from '../assets/icons/manage_trip.svg';
-import {getPOIbyCity,getTrip} from '../utils';
+import {getPOIbyCity,searchPOI,getTrip} from '../utils';
 import pic1 from '../images/LA/Academy-Museum-of-Motion-Pictures-01-B.jpg';
 import pic2 from '../images/LA/Griffith_Observatory,_Los_Angeles_2011.jpg';
 import pic3 from '../images/LA/universal-studios-hollywood.jpg';
@@ -291,7 +291,6 @@ class Main extends React.Component {
     this.setState({
       loading: true,
     });
- 
     // try {
     //   const resp = await getPOIbyCity(this.props.city);
     //   this.setState({
@@ -318,32 +317,46 @@ class Main extends React.Component {
     });
   }
 
-  updatePOI = (POIs) => {
-    const show = this.state.curShow;
-    const adding = POIs.length;
-    for (let i=show.length-1;i>=adding;i--) {
-      show[i]=show[i-adding];
-    }
-    for (let i=adding-1;i>=0;i--) {
-      show[i]=POIs[i];
-    }
+  updatePOI = async (setting) => {
     this.setState({
-      curShow: show,
-    })
+      loading: true,
+    });
+    try {
+      const POIs = await searchPOI(setting.location);
+      message.success("Successfully searched POIs");
+      const show = this.state.curShow;
+      const adding = POIs.length;
+      for (let i=show.length-1;i>=adding;i--) {
+        show[i]=show[i-adding];
+      }
+      for (let i=adding-1;i>=0;i--) {
+        show[i]=POIs[i];
+      }
+      this.setState({
+        curShow: show,
+      })
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+
   }
 
   buildTrip = async (setting) => {
     this.setState({
       home: setting.location,
-      beg_date: setting.beg_date.format("YYYY-MM-DD"),
-      end_date: setting.end_date.format("YYYY-MM-DD"),
+      beg_date: setting.beg_date,
+      end_date: setting.end_date,
       loading: true,
     });
     try {
       const resp = await getTrip(
-        this.state.home,
-        this.state.beg_date,
-        this.state.end_date,
+        setting.location,
+        setting.beg_date,
+        setting.end_date,
         this.state.selected,
         );
       message.success("Successfully bulid trip");
