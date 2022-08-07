@@ -1,6 +1,6 @@
 const domain = "http://localhost:8080";
 
-export const register = (credential, asHost) => {
+export const register = (credential) => {
     const registerUrl = `${domain}/register`;
     return fetch(registerUrl, {
       method: "POST",
@@ -47,7 +47,7 @@ export const register = (credential, asHost) => {
  
   export const searchPOI = (query) => {
     const authToken = localStorage.getItem("authToken");
-    const searchPOIUrl = new URL(`${domain}/search/`);
+    const searchPOIUrl = new URL(`${domain}/search`);
     searchPOIUrl.searchParams.append("name", query.place_name);
    
     return fetch(searchPOIUrl, {

@@ -26,19 +26,19 @@ class SearchPOI extends React.Component {
         loading: true,
       });
    
-      try {
-        const POIID = await searchPOI({
-          place_name: values.location,
-        });
-        message.success("Successfully searched POI");
-        this.props.onShow(POIID);
-      } catch (error) {
-        message.error(error.message);
-      } finally {
+      // try {
+      //   const POIs = await searchPOI({
+      //     place_name: values.location,
+      //   });
+      //   message.success("Successfully searched POIs");
+      //   this.props.onShow(POIs);
+      // } catch (error) {
+      //   message.error(error.message);
+      // } finally {
         this.setState({
           loading: false,
         });
-      }
+      // }
     };
    
     render() {
