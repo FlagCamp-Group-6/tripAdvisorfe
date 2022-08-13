@@ -358,35 +358,36 @@ class Main extends React.Component {
     var dateTime = date*86400+time;    
     console.log(dateTime);
 
+    console.log(setting.beg_date);
     try {
       const resp = await initTrip(setting.beg_date,setting.end_date,dateTime);
     } catch (error) {
       message.error(error.message);
     }
 
-    try {
-      console.log("selected are");
-      console.log(this.state.selected);
-      const resp = await getTrip(
-        setting.location,
-        setting.beg_date,
-        setting.end_date,
-        this.state.selected,
-        );
-      message.success("Successfully bulid trip");
-      this.setState({
-        curTrip : resp,
-      });
-      this.setState({
-        activetab: 2,
-      });
-    } catch (error) {
-      message.error(error.message);
-    } finally {
+    // try {
+    //   console.log("selected are");
+    //   console.log(this.state.selected);
+    //   const resp = await getTrip(
+    //     setting.location,
+    //     setting.beg_date,
+    //     setting.end_date,
+    //     this.state.selected,
+    //     );
+    //   message.success("Successfully bulid trip");
+    //   this.setState({
+    //     curTrip : resp,
+    //   });
+    //   this.setState({
+    //     activetab: 2,
+    //   });
+    // } catch (error) {
+    //   message.error(error.message);
+    // } finally {
       this.setState({
         loading: false,
       });
-    }
+    // }
   }
 
   updateSelection = (input) => {

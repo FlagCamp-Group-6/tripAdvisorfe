@@ -99,17 +99,21 @@ export const register = (credential) => {
     const authToken = localStorage.getItem("authToken");
     const getTripUrl = new URL(`${domain}/trip/add`);
     getTripUrl.searchParams.append("name",date_time);
+    getTripUrl.searchParams.append("checkin",beg_date.format("YYYY-MM-DD"));
+    getTripUrl.searchParams.append("checkout",end_date.format("YYYY-MM-DD"));
     console.log(getTripUrl);
     console.log("initialize trip");
     return fetch(getTripUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
+        // "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.status !== 200) {
         throw Error("Fail to initialize trip");
       }   
+      console.log(response);
       return response.json();
     });
   };
@@ -131,6 +135,7 @@ export const register = (credential) => {
     console.log(getTripUrl);
     console.log("build trip");
     return fetch(getTripUrl, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -273,4 +278,3 @@ export const register = (credential) => {
   };
 
    
-  

@@ -80,6 +80,12 @@ const columns = [
       render: (text) => <h3 className="visit">{text}</h3>,
     },
     {
+      title: 'Recommmend Time',
+      dataIndex: 'time_taken',
+      key: 'time_taken',
+      render: (text) => <h3 className="visit">{text}</h3>,
+    },
+    {
       title: 'Point Of Interest',
       dataIndex: 'name',
       key: 'name',
@@ -155,20 +161,34 @@ const columns = [
 
     useEffect(() => {
       let testdata = [];
-      for (let i=0;i<info.length;i++) {
-        const item = selected.filter( entry => {
-          return entry.id === info[i].id;
-        });
+      // for (let i=0;i<info.length;i++) {
+      //   const item = selected.filter( entry => {
+      //     return entry.id === info[i].id;
+      //   });
+      //   testdata[i]={
+      //     key: info[i].key,
+      //     day: info[i].day,
+      //     date: info[i].date,
+      //     start_time: info[i].start_time,
+      //     end_time: info[i].end_time,
+      //     name: item[0].name,
+      //     address: item[0].address,
+      //     latitude: item[0].latitude,
+      //     longitude: item[0].longitude,
+      //   };
+      // }      
+      for (let i=0;i<selected.length;i++) {
         testdata[i]={
-          key: info[i].key,
-          day: info[i].day,
-          date: info[i].date,
-          start_time: info[i].start_time,
-          end_time: info[i].end_time,
-          name: item[0].name,
-          address: item[0].address,
-          latitude: item[0].latitude,
-          longitude: item[0].longitude,
+          key: i,
+          day: i+1,
+          date: beg_date.format("YYYY-MM-DD"),
+          start_time: "10:00",
+          end_time: "18:00",
+          time_taken: selected[i].timeTaken,
+          name: selected[i].name,
+          address: selected[i].address,
+          latitude: selected[i].latitude,
+          longitude: selected[i].longitude,
         };
       }
       setData(testdata);
