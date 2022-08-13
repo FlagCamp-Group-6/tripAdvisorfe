@@ -3,10 +3,14 @@ import { Form, Button, Input, Space, message, Row } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 
 class SearchPOI extends React.Component {
-    formRef = React.createRef();
-    state = {
+  constructor() {
+    super();
+    this.state = {
       loading: false,
-    };
+    }
+  }
+    formRef = React.createRef();
+
    
     onFinish = () => {
       console.log("finish form");
@@ -24,9 +28,7 @@ class SearchPOI extends React.Component {
       this.setState({
         loading: true,
       });
-
-      this.props.updatePOI(formInstance.getFieldsValue(true));
-   
+      this.props.onShow(formInstance.getFieldsValue(true));
       this.setState({
         loading: false,
       });

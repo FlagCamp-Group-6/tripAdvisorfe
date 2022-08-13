@@ -97,11 +97,16 @@ const columns = [
       key: 'skip',
       render: (_, record) => (
         <Space size="middle">
-          <Button type='primary' shape='round'>Skip</Button>
+          <Button type='primary' shape='round' onClick={click(record)}>Skip</Button>
         </Space>
       ),
     },
   ]
+
+  const click = (record) => {
+    console.log("record is");
+    console.log(record);
+  }
 
   const PlanTrip = ({selected, beg_date, end_date, curTrip}) => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);

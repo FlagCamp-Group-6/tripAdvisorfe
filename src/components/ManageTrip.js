@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Table, Timeline, Col, Button, Row, message } from 'antd';
 import React from 'react';
-import { deleteTrip, loadTrip } from '../utils';
+import { deleteTrip, getTripByUser } from '../utils';
  
  
 const columns = [
@@ -139,7 +139,7 @@ class ManageTrip extends React.Component {
     });
  
     try {
-      const resp = await loadTrip();
+      const resp = await getTripByUser();
       this.setState({
         data: resp,
       });
