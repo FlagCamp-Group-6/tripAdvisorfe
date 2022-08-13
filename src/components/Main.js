@@ -362,6 +362,7 @@ class Main extends React.Component {
     try {
       const resp = await initTrip(setting.beg_date,setting.end_date,dateTime);
     } catch (error) {
+      console.log(error);
       message.error(error.message);
     }
 

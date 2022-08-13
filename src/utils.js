@@ -107,14 +107,11 @@ export const register = (credential) => {
       method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
-        // "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.status !== 200) {
         throw Error("Fail to initialize trip");
       }   
-      console.log(response);
-      return response.json();
     });
   };
 
