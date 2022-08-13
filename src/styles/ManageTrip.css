@@ -1,8 +1,9 @@
  
 .trip {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Poppins;
     font-size: 15px;
     align-items: middle;
+    width: '900px';
 }
  
 .ant-table-thead>tr>th{
@@ -18,23 +19,20 @@
    
 }
  
-.fonttest {
-    font-size: 15px;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    margin-left: 10%;
-}
+
  
 .left-side {
     padding: 20px;
     width: 40%;
+    margin-top: 20px;
     position: absolute;
 }
  
 .right-side {
-    right: 00%;
+    right: 5%;
+    padding: 20px;
     width: 40%;
+    margin-top: 20px;
     position: absolute;
 }
  

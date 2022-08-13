@@ -2,6 +2,8 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Table, Timeline, Col, Button, Row, message } from 'antd';
 import React from 'react';
 import { deleteTrip, loadTrip } from '../utils';
+import Main from './Main';
+
  
  
 const columns = [
@@ -10,28 +12,28 @@ const columns = [
     title: 'Trip Name',
     dataIndex: 'name',
     key: 'name',
-    width: '300px',
+    width: '600px', 
     render: (text) => <h1 className="trip">{text}</h1>,
   },
   {
     title: 'Destination',
     dataIndex: 'destination',
     key: 'destination',
-    width: '300px',
+    width: '600px',
     render: (text) => <h3 className="trip">{text}</h3>,
   },
   {
-    title: 'Duration',
-    dataIndex: 'number_of_days',
-    key: 'number_of_days',
-    width: '300px',
+    title: 'Start Date',
+    dataIndex: 'beg_date',
+    key: 'beg_date',
+    width: '600px',
     render: (text) => <h3 className="trip">{text}</h3>,
   },
   {
-    title: 'Travelers',
-    dataIndex: 'number_of_travelers',
-    key: 'number_of_travelers',
-    width: '300px',
+    title: 'End Date',
+    dataIndex: 'end_date',
+    key: 'end_date',
+    width: '600px',
     render: (text) => <h3 className="trip">{text}</h3>,
   },
   // Table.EXPAND_COLUMN,
@@ -42,8 +44,8 @@ const data = [
     key: 1,
     name: 'Trip 1',
     destination: 'LA',
-    number_of_travelers: '5',
-    number_of_days: '3',
+    beg_date: '8/1/2022',
+    end_date: '8/3/2022',
     itinerary: [{
       "date": "D1",
       "poi": "Hollywood",
@@ -59,8 +61,8 @@ const data = [
     key: 2,
     name: 'Trip 2',
     destination: 'LA',
-    number_of_travelers: '3',
-    number_of_days: '2',
+    beg_date: '7/16/2022',
+    end_date: '7/22/2022',
     itinerary: [{
       "date": "D1",
       "poi": "Hollywood",
@@ -73,8 +75,8 @@ const data = [
     key: 3,
     name: 'Trip 3',
     destination: 'LA',
-    number_of_travelers: '6',
-    number_of_days: '2',
+    beg_date: '6/6/2022',
+    end_date: '6/11/2022',
     itinerary: [{
       "date": "D1",
       "poi": "Hollywood",
@@ -96,13 +98,13 @@ class RemoveTripButton extends React.Component {
   };
  
   handleRemoveTrip = async () => {
-    const { stay, onRemoveSuccess } = this.props;
+    const { trip, onRemoveSuccess } = this.props;
     this.setState({
       loading: true,
     });
- 
+  
     try {
-      await deleteTrip(stay.id);
+      await deleteTrip(trip.id);
       onRemoveSuccess();
     } catch (error) {
       message.error(error.message);
@@ -125,6 +127,27 @@ class RemoveTripButton extends React.Component {
         icon={<DeleteOutlined />}
         size="small">
         delete
+      </Button>
+    );
+  }
+}
+
+class ModifyTripButton extends React.Component {
+ 
+  handleModifyTrip = () => {
+    //
+  }
+ 
+  render() {
+    return (
+      <Button
+        onClick={this.modifyRemoveTrip}
+        type="default"
+        className="bottontest"
+        shape="round"
+        icon={<EditOutlined />}
+        size="small">
+        modify
       </Button>
     );
   }
@@ -155,7 +178,8 @@ class ManageTrip extends React.Component {
   render() {
     return (
       <Row>
-        <Col span={16} className="left-side" >
+        <Col span={12} className="left-side" >
+          <h1>Upcoming Trips</h1>
           <Table
             columns={columns}
             expandable={{
@@ -171,7 +195,7 @@ class ManageTrip extends React.Component {
                     </Timeline>
                   </Col >
                   <Col span={8} className="btn-container" >
-                    <Button type="default" className="bottontest" shape="round" icon={<EditOutlined />} size="small" >modify</Button>
+                    <ModifyTripButton trip={record} onclick={this.modifyData} />
                     <RemoveTripButton trip={record} onRemoveSuccess={this.loadData} />
                   </Col>
                 </Row>
@@ -179,15 +203,33 @@ class ManageTrip extends React.Component {
             }}
             dataSource={data}
           />
-        </Col>
-        <Col span={8} className="right-side">
-          <p>
-            Load trips from database (cannot just load POIs in case the user can adjust the route)
-          </p>
-          <p>
-            Draw trips based on used record
-          </p>
-        </Col>
+        </Col> 
+        <Col span={12} className="right-side" >
+          <h1>Past Trips</h1>
+          <Table
+            columns={columns}
+            expandable={{
+              expandedRowRender: (record) => (
+                <Row>
+                  <Col span={16}>
+                    <Timeline mode="left" className={"timelineobj"}>
+                      {record.itinerary.map((step) => (
+                        <Timeline.Item className={"fonttest"} >
+                          {step.date} {step.poi}
+                        </Timeline.Item>
+                      ))}
+                    </Timeline>
+                  </Col >
+                  <Col span={8} className="btn-container" >
+                    {/* <ModifyTripButton trip={record} onclick={this.modifyData} /> */}
+                    <RemoveTripButton trip={record} onRemoveSuccess={this.loadData} />
+                  </Col>
+                </Row>
+              ),
+            }}
+            dataSource={data}
+          />
+        </Col>  
       </Row>
     )
   }
