@@ -1,19 +1,22 @@
 import React from 'react';
 import { Form, Button, Input, Space, message, Row } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
-import { searchPOI } from "../utils";
 
 class SearchPOI extends React.Component {
-    formRef = React.createRef();
-    state = {
+  constructor() {
+    super();
+    this.state = {
       loading: false,
-    };
+    }
+  }
+    formRef = React.createRef();
+
    
     onFinish = () => {
       console.log("finish form");
     };
    
-    handleSearch = async (values) => {
+    handleSearch = async () => {
       const formInstance = this.formRef.current;
    
       try {
@@ -25,20 +28,10 @@ class SearchPOI extends React.Component {
       this.setState({
         loading: true,
       });
-   
-      try {
-        const POIID = await searchPOI({
-          place_name: values.location,
-        });
-        message.success("Successfully searched POI");
-        this.props.onShow(POIID);
-      } catch (error) {
-        message.error(error.message);
-      } finally {
-        this.setState({
-          loading: false,
-        });
-      }
+      this.props.onShow(formInstance.getFieldsValue(true));
+      this.setState({
+        loading: false,
+      });
     };
    
     render() {

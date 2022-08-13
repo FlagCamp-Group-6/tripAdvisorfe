@@ -29,9 +29,10 @@ function Login({ handleLoginSuccess }) {
     }
 
     try {
+      console.log(formInstance.getFieldsValue(true));
         const resp = await login(formInstance.getFieldsValue(true));
-        setDisplayModal(false)
-        message.success("Welcome back")
+        setDisplayModal(false);
+        message.success("Welcome back");
         handleLoginSuccess(resp.token);
     } catch (error) {
         message.error(error.message);
@@ -75,7 +76,7 @@ function Login({ handleLoginSuccess }) {
           ref={formRef}
         >
           <Form.Item
-            name="user_id"
+            name="username"
             rules={[{ required: true, message: 'Please input your Username!' }]}
           >
             <Input prefix={<UserOutlined />} placeholder="Username" />
@@ -94,7 +95,8 @@ function Login({ handleLoginSuccess }) {
           <Button
             onClick={handleLogin}
             shape="round"
-            type="primary"           
+            type="primary"
+            htmlType="submit"           
           >
             Log in
           </Button>

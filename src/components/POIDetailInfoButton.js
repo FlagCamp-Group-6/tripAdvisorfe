@@ -22,7 +22,7 @@ class POIDetailInfoButton extends React.Component {
  
   render() {
     const { POI } = this.props;
-    const { name, city, description, address, time_taken } = POI;
+    const { name, city, description, address, timeTaken } = POI;
     const { modalVisible } = this.state;
     return (
       <>
@@ -54,7 +54,7 @@ class POIDetailInfoButton extends React.Component {
                 <Text strong={true}>Address</Text>
                 <Text type="secondary">{address}</Text>
                 <Text strong={true}>Time Taken</Text>
-                <Text type="secondary">{time_taken}</Text>
+                <Text type="secondary">{timeTaken}</Text>
             </Space>
           </Modal>
         )}
