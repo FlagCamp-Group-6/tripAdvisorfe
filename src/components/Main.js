@@ -3,10 +3,10 @@ import { Layout, Row, Typography, Space, message } from "antd";
 import WhatsHot from './WhatsHot'
 import PlanTrip from './PlanTrip'
 import ManageTrip from './ManageTrip'
-import whats_hot  from '../assets/icons/whats_hot.svg';
-import plan_trip  from '../assets/icons/plan_trip.svg';
-import manage_trip  from '../assets/icons/manage_trip.svg';
-import {getPOIByCity,getPOIByName,getTrip, initTrip} from '../utils';
+import whats_hot from '../assets/icons/whats_hot.svg';
+import plan_trip from '../assets/icons/plan_trip.svg';
+import manage_trip from '../assets/icons/manage_trip.svg';
+import { getPOIByCity, getPOIByName, getTrip, initTrip} from '../utils';
 // import pic1 from '../images/LA/Academy-Museum-of-Motion-Pictures-01-B.jpg';
 // import pic2 from '../images/LA/Griffith_Observatory,_Los_Angeles_2011.jpg';
 // import pic3 from '../images/LA/universal-studios-hollywood.jpg';
@@ -35,15 +35,15 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {
-        loading: false,
-        activetab: 1,
-        POIList: [],
-        selected: [],
-        beg_date: null,
-        end_date: null,
-        home: "",
-        curTrip: [],
-        curShow: [],
+      loading: false,
+      activetab: 1,
+      POIList: [],
+      selected: [],
+      beg_date: null,
+      end_date: null,
+      home: "",
+      curTrip: [],
+      curShow: [],
       //   POIList: [    {
       //     id: 1,
       //     name: 'Academy Museum of Motion Pictures',
@@ -286,11 +286,12 @@ class Main extends React.Component {
   componentDidMount() {
     this.loadPOI();
   }
- 
+
   loadPOI = async () => {
     this.setState({
       loading: true,
     });
+
     try {
       const resp = await getPOIByCity(this.props.city);
       this.setState({
@@ -393,12 +394,12 @@ class Main extends React.Component {
 
   updateSelection = (input) => {
     this.setState({
-      selected:input,
+      selected: input,
     })
   }
 
   render() {
-    const { POIList,selected,beg_date,end_date,curTrip } = this.state;
+    const { POIList, selected, beg_date, end_date, curTrip } = this.state;
 
     return (
       <Layout
@@ -408,82 +409,82 @@ class Main extends React.Component {
       >
         <Sider className="site-layout-background" width={100}>
           <Space direction='vertical'>
-          {this.state.activetab===1 && (
-            <>
-            <div className="optionselected">
-            <img src={whats_hot} className="Nav_01" alt="icon" />
-            </div>
-              <Typography.Title
-              level={3}              
-              style={{margin: 0}}>
-              What's Hot
-              </Typography.Title>
+            {this.state.activetab === 1 && (
+              <>
+                <div className="optionselected">
+                  <img src={whats_hot} className="Nav_01" alt="icon" />
+                </div>
+                <Typography.Title
+                  level={3}
+                  style={{ margin: 0 }}>
+                  What's Hot
+                </Typography.Title>
               </>
-          )}
-          {this.state.activetab!==1 && (
-            <>
-        <div className="option" onClick={this.setTab1.bind(this)}> 
-        <img src={whats_hot} className="Nav_01" alt="icon" />
-        </div>
-            <Typography.Title
-            type="secondary"
-            level={3}
-            style={{margin: 0}}>
-             What's Hot
-            </Typography.Title>
-            </>
-         )}
-        {this.state.activetab===2 && (
-          <>
-            <div className="optionselected">
-            <img src={plan_trip} className="Nav_02" alt="icon" />
-            </div>
-              <Typography.Title
-              level={3}
-              style={{margin: 0}}>
-              Plan My Trip
-              </Typography.Title>
+            )}
+            {this.state.activetab !== 1 && (
+              <>
+                <div className="option" onClick={this.setTab1.bind(this)}>
+                  <img src={whats_hot} className="Nav_01" alt="icon" />
+                </div>
+                <Typography.Title
+                  type="secondary"
+                  level={3}
+                  style={{ margin: 0 }}>
+                  What's Hot
+                </Typography.Title>
               </>
-          )}
-        {this.state.activetab!==2 && (
-          <>
-        <div className="option" onClick={this.setTab2.bind(this)}> 
-        <img src={plan_trip} className="Nav_02" alt="icon" />
-        </div>
-            <Typography.Title
-            type="secondary"
-            level={3}
-            style={{margin: 0}}>
-            Plan My Trip
-            </Typography.Title>
-            </>
-        )}
-        {this.state.activetab===3 && (
-          <>
-            <div className="optionselected">
-            <img src={manage_trip} className="Nav_03" alt="icon" />
-            </div>
-              <Typography.Title
-              level={3}
-              style={{margin: 0}}>
-              Manage Trip
-              </Typography.Title>
+            )}
+            {this.state.activetab === 2 && (
+              <>
+                <div className="optionselected">
+                  <img src={plan_trip} className="Nav_02" alt="icon" />
+                </div>
+                <Typography.Title
+                  level={3}
+                  style={{ margin: 0 }}>
+                  Plan My Trip
+                </Typography.Title>
               </>
-          )}
-        {this.state.activetab!==3 && (
-        <>
-        <div className="option" onClick={this.setTab3.bind(this)}> 
-        <img src={manage_trip} className="Nav_03" alt="icon" />
-        </div>
-            <Typography.Title
-            type="secondary"
-            level={3}
-            style={{margin: 0}}>
-            Manage Trip
-            </Typography.Title>
-            </>
-        )}
-        </Space>
+            )}
+            {this.state.activetab !== 2 && (
+              <>
+                <div className="option" onClick={this.setTab2.bind(this)}>
+                  <img src={plan_trip} className="Nav_02" alt="icon" />
+                </div>
+                <Typography.Title
+                  type="secondary"
+                  level={3}
+                  style={{ margin: 0 }}>
+                  Plan My Trip
+                </Typography.Title>
+              </>
+            )}
+            {this.state.activetab === 3 && (
+              <>
+                <div className="optionselected">
+                  <img src={manage_trip} className="Nav_03" alt="icon" />
+                </div>
+                <Typography.Title
+                  level={3}
+                  style={{ margin: 0 }}>
+                  Manage Trip
+                </Typography.Title>
+              </>
+            )}
+            {this.state.activetab !== 3 && (
+              <>
+                <div className="option" onClick={this.setTab3.bind(this)}>
+                  <img src={manage_trip} className="Nav_03" alt="icon" />
+                </div>
+                <Typography.Title
+                  type="secondary"
+                  level={3}
+                  style={{ margin: 0 }}>
+                  Manage Trip
+                </Typography.Title>
+              </>
+            )}
+          </Space>
         </Sider>
         <Content
           style={{
@@ -491,22 +492,22 @@ class Main extends React.Component {
             minHeight: 2000,
           }}
         >
-            <Row className="main">
-              {this.state.activetab===1 && (
-              <WhatsHot POIList={POIList} selected={selected} showed={this.state.curShow} 
-              updatePOI={this.updatePOI} updateSelection={this.updateSelection} buildTrip={this.buildTrip} />
-              )}
-              {this.state.activetab===2 && (
-                  <PlanTrip selected={selected} beg_date={beg_date} end_date={end_date} curTrip={curTrip}/>
-              )}
-              {this.state.activetab===3 && (
-                  <ManageTrip />
-              )}
-            </Row>
+          <Row className="main">
+            {this.state.activetab===1 && (
+            <WhatsHot POIList={POIList} selected={selected} showed={this.state.curShow} 
+            updatePOI={this.updatePOI} updateSelection={this.updateSelection} buildTrip={this.buildTrip} />
+            )}
+            {this.state.activetab===2 && (
+                <PlanTrip selected={selected} beg_date={beg_date} end_date={end_date} curTrip={curTrip}/>
+            )}
+            {this.state.activetab===3 && (
+                <ManageTrip />
+            )}
+          </Row>
         </Content>
       </Layout>
     );
   }
 }
- 
+
 export default Main;
