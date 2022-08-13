@@ -20,43 +20,65 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 const center = { lat: 34.098907, lng: -118.327759 }
 
-const origin = 'Manhattan Beach Pier';
-const destination = 'Los Angeles County Museum of Art' ;
+// const origin = 'Manhattan Beach Pier';
+// const destination = 'Los Angeles County Museum of Art' ;
 
-const waypoints = [
-  {
-    location: '100 Universal City Plaza, Universal City',
-    stopover: true
-  },
-  {
-    location: 'Griffith Observatory',
-    stopover: true
-  },
-  {
-    location: 'Venice Canals',
-    stopover: true
-  }
-];
+// const waypoints = [
+//   {
+//     location: '100 Universal City Plaza, Universal City',
+//     stopover: true
+//   },
+//   {
+//     location: 'Griffith Observatory',
+//     stopover: true
+//   },
+//   {
+//     location: 'Venice Canals',
+//     stopover: true
+//   }
+// ];
 
-function Map() {
+function Map({data,keys}) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAcjpLjt1AYE2fWbwbrto8ToyvLIU33teI",
     libraries: ['places'],
   })
-
+  
   const [map, setMap] = useState(/** @type google.maps.Map */ (null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
+  const [origin, setOrigin] = useState(center);
+  const [destination, setDestination] = useState(center);
+  const [waypoints, setWaypoints] = useState([]);
 
-  /** @type React.MutableRefObject<HTMLInputElement> */
+    /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef()
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef()
+
+  useEffect(() => {
+    let newWaypoints = [];
+    console.log(data);
+    console.log("keys");
+    console.log(keys);
+    for (let i=0;i<keys.length;i++) {
+      const item = data.filter( entry => {
+        return entry.key === keys[i];
+      });
+      newWaypoints[i]={
+        location: {lat: item[0].latitude, lng: item[0].longitude},
+        stopover: true,
+      };
+    }
+    setWaypoints(newWaypoints);
+    console.log("waypoints");
+    console.log(waypoints);
+  }, [keys])
 
   if (!isLoaded) {
     return <SkeletonText />
@@ -102,29 +124,28 @@ function Map() {
       position='relative'
       flexDirection='column'
       alignItems='center'
-      h='100vh'
-      w='100vw'
+      h='76vh'
+      w='38vw'
     >
-      <Box position='absolute' left={0} top={0} h='50%' w='50%'>
-        {/* Google Map Box */}
-        <GoogleMap
-          center={center}
-          zoom={15}
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          options={{
-            zoomControl: true,
-            streetViewControl: true,
-            mapTypeControl: true,
-            fullscreenControl: true,
-          }}
-          onLoad={map => setMap(map)}
-        >
-          <Marker position={center} />
-          {directionsResponse && (
-            <DirectionsRenderer directions={directionsResponse} />
-          )}
-        </GoogleMap>
-        
+      <Box position='absolute' left={0} top={0} h='70%' w='100%'>
+      {/* Google Map Box */}
+      <GoogleMap
+        center={center}
+        zoom={15}
+        mapContainerStyle={{ width: '100%', height: '100%' }}
+        options={{
+          zoomControl: true,
+          streetViewControl: true,
+          mapTypeControl: true,
+          fullscreenControl: true,
+        }}
+        onLoad={map => setMap(map)}
+      >
+        <Marker position={center} />
+        {directionsResponse && (
+          <DirectionsRenderer directions={directionsResponse} />
+        )}
+      </GoogleMap>  
       </Box>
       <Box
         p={1}
@@ -132,8 +153,10 @@ function Map() {
         m={1}
         bgColor='white'
         shadow='base'
-        minW='container.md'
         zIndex='1'
+        position='absolute'
+        top={0}
+        right={0}
       >
         <HStack spacing={2} justifyContent='space-between'>
           {/* <Box flexGrow={1}>
@@ -169,16 +192,18 @@ function Map() {
         </HStack>
         <HStack spacing={1} mt={1} justifyContent='space-between'>
           <Text>Distance: {distance} </Text>
+        </HStack>
+        <HStack spacing={1} mt={1} justifyContent='space-between'>
           <Text>Duration: {duration} </Text>
           <IconButton
-            aria-label='center back'
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => {
-              // auto center when click
-              map.panTo(center)
-              map.setZoom(15)
-            }}
+          aria-label='center back'
+          icon={<FaLocationArrow />}
+          isRound
+          onClick={() => {
+            // auto center when click
+            map.panTo(center)
+            map.setZoom(15)
+          }}
           />
         </HStack>
       </Box>

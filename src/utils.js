@@ -87,8 +87,8 @@ export const register = (credential) => {
     console.log(sel);
     const getTripUrl = new URL(`${domain}/trips/`);
     // getTripUrl.searchParams.append("home",home);
-    getTripUrl.searchParams.append("lat", 34.053713);
-    getTripUrl.searchParams.append("lon", -118.242815);
+    getTripUrl.searchParams.append("lat", 34.098907);
+    getTripUrl.searchParams.append("lon", -118.327759);
     getTripUrl.searchParams.append("start_date",beg_date.format("YYYY-MM-DD"));
     getTripUrl.searchParams.append("end_date",end_date.format("YYYY-MM-DD"));
     getTripUrl.searchParams.append("POIs",sel);

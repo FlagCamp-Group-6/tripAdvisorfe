@@ -353,6 +353,8 @@ class Main extends React.Component {
       loading: true,
     });
     try {
+      console.log("selected are");
+      console.log(this.state.selected);
       const resp = await getTrip(
         setting.location,
         setting.beg_date,
