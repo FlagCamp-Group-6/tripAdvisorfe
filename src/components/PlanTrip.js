@@ -1,7 +1,6 @@
-import { Table, Col, Button, Space, message } from 'antd';
-import { saveTrip } from '../utils'
+import { Table, Col, Button, Space, message, Popconfirm } from 'antd';
+import { saveTrip, getPOIFromTrip, getTripByID, getPlanFromTrip, delPOIFromTrip } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
-import {GOOG_API_KEY, GDIR_BASE_URL} from "../constants";
 import update from 'immutability-helper';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -54,165 +53,154 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
   );
 };
 
-const columns = [
-    {
-      title: 'Day',
-      dataIndex: 'day',
-      key: 'day',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'Start Time',
-      dataIndex: 'start_time',
-      key: 'start_time',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'End Time',
-      dataIndex: 'end_time',
-      key: 'end_time',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'Recommmend Time',
-      dataIndex: 'time_taken',
-      key: 'time_taken',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'Point Of Interest',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      render: (text) => <h3 className="visit">{text}</h3>,
-    },
-    // Table.SELECTION_COLUMN,
-    {
-      title: 'Skip',
-      key: 'skip',
-      render: (_, record) => (
-        <Space size="middle">
-          <Button type='primary' shape='round' onClick={click(record)}>Skip</Button>
-        </Space>
-      ),
-    },
-  ]
-
-  const click = (record) => {
-    console.log("record is");
-    console.log(record);
-  }
-
-  const PlanTrip = ({selected, beg_date, end_date, curTrip}) => {
+  const PlanTrip = ({curTrip}) => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [url,setUrl] = useState("abc");
-    // const [data,setData] = useState ([
-    const [info,setInfo] = useState ([
-    {
-        key: 1,
-        day: 1,
-        date: '07/19',
-        start_time: '11:00',
-        end_time: '14:00',
-        // name: 'Academy Museum of Motion Pictures',
-        // address: '6067 Wilshire Blvd., Los Angeles',
-        // latitude: 34.063333,
-        // longitude: -118.360833,
-        id: 1,
-    },
-    {
-        key: 2,
-        day: 1,
-        date: '07/19',
-        start_time: '21:00',
-        end_time: '22:00',
-        // name: 'Griffith Observatory',
-        // address: '2800 E Observatory Rd., Los Angeles',
-        // latitude: 34.118611,
-        // longitude: -118.300278,
-        id: 2,
-    },
-    {
-        key: 3,
-        day: 2,
-        date: '07/20',
-        start_time: '10:00',
-        end_time: '16:00',
-        // name: 'Universal Studio Hollywood',
-        // address: '100 Universal City Plaza, Universal City',
-        // latitude: 34.138117,
-        // longitude: -118.353378,
-        id: 3,
-    },
-    ]);
-    const [data,setData] = useState ([]);
+    const [beg_date, setBeg_date] = useState([]);
+    const [end_date, setEnd_date] = useState([]);    
+    const [poiSet, setPoiSet] = useState([]);
+    const [data, setData] = useState ([]);
+    const [curPlan, setCurPlan] = useState([]);
 
     useEffect(() => {
-      let testdata = [];
-      // for (let i=0;i<info.length;i++) {
-      //   const item = selected.filter( entry => {
-      //     return entry.id === info[i].id;
-      //   });
-      //   testdata[i]={
-      //     key: info[i].key,
-      //     day: info[i].day,
-      //     date: info[i].date,
-      //     start_time: info[i].start_time,
-      //     end_time: info[i].end_time,
-      //     name: item[0].name,
-      //     address: item[0].address,
-      //     latitude: item[0].latitude,
-      //     longitude: item[0].longitude,
-      //   };
-      // }      
-      for (let i=0;i<selected.length;i++) {
-        testdata[i]={
-          key: i,
-          day: i+1,
-          date: beg_date.format("YYYY-MM-DD"),
-          start_time: "10:00",
-          end_time: "18:00",
-          time_taken: selected[i].timeTaken,
-          name: selected[i].name,
-          address: selected[i].address,
-          latitude: selected[i].latitude,
-          longitude: selected[i].longitude,
-        };
+      try {
+        // const resp = getPOIFromTrip(curTrip).then((value) => {
+        const resp1 = getTripByID(curTrip).then((value) => {
+          console.log("trip looks like");
+          console.log(value);
+          let mydate = stringToDate(value.checkin);
+          setBeg_date(value.checkin);
+          setEnd_date(value.checkout);
+          setPoiSet(value.poiSet);
+          const resp2 = getPlanFromTrip(curTrip).then((plan) => {
+            setCurPlan(plan);
+            console.log("plan looks like");
+            console.log(plan);
+            let testdata = [];
+            let idx=0;
+            for (let i=0;i<plan.length;i++) {
+              let time=10.0;
+              for (let j=0;j<plan[i].length;j++) {
+                const beghh = parseInt(time,10);
+                const tempb = parseInt((time-beghh)*60);
+                const begmm = (tempb<10?"0":"")+tempb;
+                const finish = time+plan[i][j].timeTaken;
+                const endhh = parseInt(finish,10);
+                const tempe = parseInt((finish-endhh)*60);
+                const endmm = (tempe<10?"0":"")+tempe;
+                testdata[idx]={
+                key: idx+1,
+                day: i+1,
+                date: dateToString(mydate),
+                start_time: beghh+":"+begmm,
+                end_time: endhh+":"+endmm,
+                time_taken: plan[i][j].timeTaken,
+                name: plan[i][j].name,
+                address: plan[i][j].address,
+                latitude: plan[i][j].latitude,
+                longitude: plan[i][j].longitude,
+                id: plan[i][j].id,
+                }
+                idx++;
+                time=finish+1.0;
+              }
+              mydate.setDate(mydate.getDate() + 1);
+            }
+            setData(testdata);
+          });
+        });
+      } catch (error) {
+        message.error(error.message);
+      } finally {
       }
-      setData(testdata);
-    }, [selected])
+    },[curTrip]);
 
-    // useEffect(() => {
-    //   const input=processUrl();
-    //   setUrl(input);
-      // fetch(url,{
-      //   mode: 'no-cors',
-      // })
-      // .then(response => {
-      //     console.log(response.data)
-      //     this.setState({
-      //         mapInfo: response.data,
-      //     })
-      // })
-      // .catch(error => {
-      //     console.log('err in fetch map -> ', error);
-      // })
-    // },[data]);
+    // help to convert between date and string
+    const dateToString = (date) => {
+      return date.toDateString();
+    };
+    const stringToDate = (input) => {
+      let parts = input.split('-');
+      let mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+      return mydate;
+    }
 
+    // table definition
+    const components = {
+      body: {
+        row: DraggableBodyRow,
+      },
+    };
+    const columns = [
+      {
+        title: 'Day',
+        dataIndex: 'day',
+        key: 'day',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'Date',
+        dataIndex: 'date',
+        key: 'date',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'Start Time',
+        dataIndex: 'start_time',
+        key: 'start_time',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'End Time',
+        dataIndex: 'end_time',
+        key: 'end_time',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'Recommmend Time',
+        dataIndex: 'time_taken',
+        key: 'time_taken',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'Point Of Interest',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+        render: (text) => <h3 className="visit">{text}</h3>,
+      },
+      // Table.SELECTION_COLUMN,
+      {
+        title: 'Skip',
+        dataIndex: 'skip',
+        key: 'skip',
+        render: (_, record) => 
+          data.length >= 1 ? (
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Button type='primary' shape='round'>Skip</Button>
+              {/* <a>Delete</a> */}
+            </Popconfirm>
+          ) : null,
+      },
+    ]
+
+    // to delete poi from table
+    const handleDelete = (key) => {
+      const deleted = data.filter((item) => item.key===key);
+      const poiid = deleted[0].id;
+      delPOIFromTrip(poiid,curTrip);
+      const newData = data.filter((item) => item.key !== key);
+      changePlan(newData);
+      // setData(newData);
+    };
+
+    // to select poi from table to plot
     const onSelectChange = (newSelectedRowKeys) => {
-      console.log('selectedRowKeys changed from: ', selectedRowKeys);
       setSelectedRowKeys(newSelectedRowKeys);
     };  
     const rowSelection = {
@@ -220,56 +208,114 @@ const columns = [
       onChange: onSelectChange,
     };
 
-    const saveOnClick = () => {
-        saveTrip(data)
-        .catch((err) => {
-          message.error(err)
-        })
+    // to save updated plan
+    const saveOnClick = async () => {
+      let day=1;
+      let plan="D1#";
+      for (let idx=0;idx<data.length;idx++) {
+        if (data[idx].day>day) {
+          day++;
+          plan=plan+",D"+day+"#";
+        }
+        plan=plan+data[idx].start_time+"-"+data[idx].end_time+":"+data[idx].id+"#";
       }
-      const components = {
-        body: {
-          row: DraggableBodyRow,
-        },
-      };
-      const moveRow = useCallback(
-        (dragIndex, hoverIndex) => {
-          const dragRow = data[dragIndex];
-          setData(
-            update(data, {
-              $splice: [
-                [dragIndex, 1],
-                [hoverIndex, 0, dragRow],
-              ],
-            }),
-          );
-        },
-        [data],
-      );
+      setLoading(true);
+      try {
+        await saveTrip(curTrip,plan);
+      } catch (error) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+      console.log("saved");
+    };
 
-    //   const processUrl = () => {
-    //     var newurl = GDIR_BASE_URL
-    //     .replace('YOUR_API_KEY',GOOG_API_KEY);
-    //     for (let i=0;i<1;i++) {
-    //         newurl=newurl.replace('parameters',`origin=${data[i].latitude}%2C${data[i].longitude}&parameters`);
-    //     }
-    //     for (let i=1;i<data.length-1;i++) {
-    //       newurl=newurl.replace('parameters',`waypoints=${data[i].latitude}%2C${data[i].longitude}&parameters`);
-    //     }
-    //     for (let i=data.length-1;i<data.length;i++) {
-    //       newurl=newurl.replace('parameters',`destination=${data[i].latitude}%2C${data[i].longitude}&parameters`);
-    //     }
-    //     console.log(newurl=newurl.replace('parameters&',''));
-    //     return newurl;
-    // }
+    // for draggable table
+    const moveRow = useCallback(
+      (dragIndex, hoverIndex) => {
+        const dragRow = data[dragIndex];
+        // setData(
+        //   update(data, {
+        //     $splice: [
+        //       [dragIndex, 1],
+        //       [hoverIndex, 0, dragRow],
+        //     ],
+        //   }),
+        // );
+        let newData = [...data];
+        newData.splice(dragIndex,1);
+        newData.splice(hoverIndex,0,dragRow);
+        changePlan(newData);
+      },
+      [data],
+    );
+
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    // a and b are javascript Date objects
+    function dateDiffInDays(a, b) {
+      // Discard the time and time-zone information.
+      const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+      const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+      return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
+
+    const changePlan = (newdata) => {
+      let mydate = stringToDate(beg_date);
+      const nodate = stringToDate(end_date);
+      const days = dateDiffInDays(mydate, nodate);
+      const dif = newdata.length-(days+1);
+      let testdata = [];
+      let curday=1;
+      let curtime=10.0;
+      for (let idx=0;idx<newdata.length;idx++) {
+        let finish = curtime+newdata[idx].time_taken;
+        if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].time_taken>=5.0 || newdata[idx].time_taken>=5.0)) {
+          curtime=10.0;
+          mydate.setDate(mydate.getDate() + 1);
+          curday++;
+          finish=curtime+newdata[idx].time_taken;
+        }
+        console.log(idx);
+        console.log(curday);
+        console.log(curtime);
+        const beghh = parseInt(curtime,10);
+        const tempb = parseInt((curtime-beghh)*60);
+        const begmm = (tempb<10?"0":"")+tempb;
+        const endhh = parseInt(finish,10);
+        const tempe = parseInt((finish-endhh)*60);
+        const endmm = (tempe<10?"0":"")+tempe;
+        testdata[idx]={
+          key: newdata[idx].key,
+          day: curday,
+          date: dateToString(mydate),
+          start_time: beghh+":"+begmm,
+          end_time: endhh+":"+endmm,
+          time_taken: newdata[idx].time_taken,
+          name: newdata[idx].name,
+          address: newdata[idx].address,
+          latitude: newdata[idx].latitude,
+          longitude: newdata[idx].longitude,
+          id: newdata[idx].id,
+        }
+        curtime+=newdata[idx].time_taken;
+        curtime+=1.0;
+      }
+      setData(testdata);
+    }
 
     return (
     <>
-    
     <Col span={13} className="left-side">
+      <Space>
       <Button className="trip-save"
       shape="round"
       onClick={saveOnClick}
       > Save Changes</Button>
+      <h3> Trip starts on {beg_date}</h3>
+      <h3> Trip ends on {end_date}</h3>
+      </Space>
     <DndProvider backend={HTML5Backend}>
       <Table
         className="visittable"
@@ -295,6 +341,5 @@ const columns = [
     </>
   )};
 
-  
 
 export default PlanTrip;

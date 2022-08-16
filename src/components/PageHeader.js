@@ -17,27 +17,27 @@ class PageHeader extends Component {
         </Menu>
       );
     render() {
-        return (
-            <Header style={{ display: "flex", justifyContent: "justify", height:"75px"}}>
-              <nav>         
-                <Link to="/">
-               <img src={Logo} className="logo" alt="icon" />
-               </Link>
-              </nav>
-            {this.props.auth && (
-              <div>
-                <Dropdown trigger="click" overlay={this.userMenuOut}>
-                  <Button icon={<UserOutlined />} shape="circle" size="large"/>
-                </Dropdown>
-              </div>
-            )}
-            {!this.props.auth && (
-              <div>
-                <Login handleLoginSuccess={this.props.handleLoginSuccess}/>
-              </div> 
-            )}
-          </Header>
-        );
+      return (
+        <Header style={{ display: "flex", justifyContent: "justify", height:"75px"}}>
+          <nav>         
+            <Link to="/">
+            <img src={Logo} className="logo" alt="icon" />
+            </Link>
+          </nav>
+        {this.props.auth && (
+          <div>
+            <Dropdown trigger="click" overlay={this.userMenuOut}>
+              <Button icon={<UserOutlined />} shape="circle" size="large"/>
+            </Dropdown>
+          </div>
+        )}
+        {!this.props.auth && (
+          <div>
+            <Login handleLoginSuccess={this.props.handleLoginSuccess}/>
+          </div> 
+        )}
+        </Header>
+      );
     }
 }
 

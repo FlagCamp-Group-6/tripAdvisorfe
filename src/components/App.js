@@ -23,9 +23,6 @@ class App extends React.Component {
     this.setState({
       authed: authToken !== null,
     });
-    this.setState({
-      authed: true,
-    });
   };
  
   handleLoginSuccess = (token) => {

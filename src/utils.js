@@ -97,13 +97,13 @@ export const register = (credential) => {
 
   export const initTrip = (beg_date,end_date,date_time) => {
     const authToken = localStorage.getItem("authToken");
-    const getTripUrl = new URL(`${domain}/trip/add`);
-    getTripUrl.searchParams.append("name",date_time);
-    getTripUrl.searchParams.append("checkin",beg_date.format("YYYY-MM-DD"));
-    getTripUrl.searchParams.append("checkout",end_date.format("YYYY-MM-DD"));
-    console.log(getTripUrl);
+    const makeTripUrl = new URL(`${domain}/trip/add`);
+    makeTripUrl.searchParams.append("name",date_time);
+    makeTripUrl.searchParams.append("checkin",beg_date.format("YYYY-MM-DD"));
+    makeTripUrl.searchParams.append("checkout",end_date.format("YYYY-MM-DD"));
+    console.log(makeTripUrl);
     console.log("initialize trip");
-    return fetch(getTripUrl, {
+    return fetch(makeTripUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -115,30 +115,18 @@ export const register = (credential) => {
     });
   };
 
-  export const getTrip = (home,beg_date,end_date,selected) => {
+  export const getNewestTripIDByUser = () => {
     const authToken = localStorage.getItem("authToken");
-    let sel = [];
-    for (let i=0;i<selected.length;i++) {
-      sel[i]=selected[i].id;
-    }
-    console.log(sel);
-    const getTripUrl = new URL(`${domain}/trip/build`);
-    // getTripUrl.searchParams.append("home",home);
-    getTripUrl.searchParams.append("lat", 34.098907);
-    getTripUrl.searchParams.append("lon", -118.327759);
-    getTripUrl.searchParams.append("start_date",beg_date.format("YYYY-MM-DD"));
-    getTripUrl.searchParams.append("end_date",end_date.format("YYYY-MM-DD"));
-    getTripUrl.searchParams.append("POIs",sel);
+    const getTripUrl = `${domain}/trip/getUserNewest`;
+    console.log("get newest trip id by user");
     console.log(getTripUrl);
-    console.log("build trip");
     return fetch(getTripUrl, {
-      method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to build trip");
+        throw Error("Fail to get user's newest trip id");
       }   
       return response.json();
     });
@@ -155,7 +143,7 @@ export const register = (credential) => {
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to load trip");
+        throw Error("Fail to get trip ID by user");
       }   
       return response.json();
     });
@@ -163,7 +151,7 @@ export const register = (credential) => {
 
   export const getTripByID = (ID) => {
     const authToken = localStorage.getItem("authToken");
-    const getTripUrl = `${domain}/trip/getById`;
+    const getTripUrl = new URL(`${domain}/trip/getById`);
     getTripUrl.searchParams.append("trip_id",ID);
     console.log("get trip by id");
     console.log(getTripUrl);
@@ -173,7 +161,7 @@ export const register = (credential) => {
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to load trip");
+        throw Error("Fail to get trip by id");
       }   
       return response.json();
     });
@@ -181,7 +169,7 @@ export const register = (credential) => {
 
   export const getPOIFromTrip = (ID) => {
     const authToken = localStorage.getItem("authToken");
-    const getPOIUrl = `${domain}/trip/getAllPoiFromTrip`;
+    const getPOIUrl = new URL(`${domain}/trip/getAllPoiFromTrip`);
     getPOIUrl.searchParams.append("trip_id",ID);
     console.log("get pois by trip id");
     console.log(getPOIUrl);
@@ -197,9 +185,27 @@ export const register = (credential) => {
     });
   };
 
+  export const getPlanFromTrip = (ID) => {
+    const authToken = localStorage.getItem("authToken");
+    const getPlanUrl = new URL(`${domain}/trip/getPlanFromTrip`);
+    getPlanUrl.searchParams.append("trip_id",ID);
+    console.log("get plan by trip id");
+    console.log(getPlanUrl);
+    return fetch(getPlanUrl, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      if (response.status !== 200) {
+        throw Error("Fail to load POIs");
+      }   
+      return response.json();
+    });
+  };
+
   export const addPOIToTrip = (poi_id,trip_id) => {
     const authToken = localStorage.getItem("authToken");
-    const addPOIUrl = `${domain}/trip/getPoiToTrip`;
+    const addPOIUrl = new URL(`${domain}/trip/addPoiToTrip`);
     addPOIUrl.searchParams.append("poi_id",poi_id);
     addPOIUrl.searchParams.append("trip_id",trip_id);
     console.log("add poi to trip");
@@ -213,13 +219,12 @@ export const register = (credential) => {
       if (response.status !== 200) {
         throw Error("Fail to add POI");
       }   
-      return response.json();
     });
   };
 
   export const delPOIFromTrip = (poi_id,trip_id) => {
     const authToken = localStorage.getItem("authToken");
-    const delPOIUrl = `${domain}/trip/deletePoiFromTrip`;
+    const delPOIUrl = new URL(`${domain}/trip/deletePoiFromTrip`);
     delPOIUrl.searchParams.append("poi_id",poi_id);
     delPOIUrl.searchParams.append("trip_id",trip_id);
     console.log("delete poi from trip");
@@ -231,19 +236,18 @@ export const register = (credential) => {
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to del POI");
+        throw Error("Fail to delete POI");
       }   
-      return response.json();
     });
   };
 
   export const deleteTrip = (tripID) => {
     const authToken = localStorage.getItem("authToken");
-    const deleteTripUrl = `${domain}/trip/delete`;
-    deleteTripUrl.searchParams.append("trip_id",tripID);
+    const delTripUrl = new URL(`${domain}/trip/delete`);
+    delTripUrl.searchParams.append("trip_id",tripID);
     console.log("delete trip");
-    console.log(deleteTripUrl);
-    return fetch(deleteTripUrl, {
+    console.log(delTripUrl);
+    return fetch(delTripUrl, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -255,9 +259,11 @@ export const register = (credential) => {
     });
   };
 
-  export const saveTrip = (data) => {
+  export const saveTrip = (tripID,data) => {
     const authToken = localStorage.getItem("authToken");
-    const saveTripUrl = `${domain}/trip/add`;
+    const saveTripUrl = new URL(`${domain}/trip/save`);
+    saveTripUrl.searchParams.append("trip_id",tripID);
+    saveTripUrl.searchParams.append("plan",data);
     console.log("save trip");
     console.log(saveTripUrl);
     return fetch(saveTripUrl, {
@@ -266,7 +272,7 @@ export const register = (credential) => {
         Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      // body: JSON.stringify(data),
     }).then((response) => {
       if (response.status !== 200) {
         throw Error("Fail to save trip");
@@ -274,4 +280,5 @@ export const register = (credential) => {
     });
   };
 
-   
+
+

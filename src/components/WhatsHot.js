@@ -24,7 +24,7 @@ class WhatsHot extends React.Component {
       <Col span={9} className="right-side">
           <DrawPoints selected={selected}/>
           <table height="40px"></table>
-          <BuildTrip buildTrip={this.props.buildTrip}/>
+          <BuildTrip buildTrip={this.props.buildTrip} addTrip={this.props.addTrip}/>
       </Col>
       </>
     )

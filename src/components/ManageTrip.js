@@ -4,7 +4,6 @@ import React from 'react';
 import { deleteTrip, getTripByUser } from '../utils';
  
 const columns = [
- 
   {
     title: 'Trip Name',
     dataIndex: 'name',
@@ -119,11 +118,11 @@ class RemoveTripButton extends React.Component {
         onClick={this.handleRemoveTrip}
         type="default"
         danger="true"
-        className="bottontest"
+        className="buttontest"
         shape="round"
         icon={<DeleteOutlined />}
         size="small">
-        delete
+        Delete
       </Button>
     );
   }
@@ -144,7 +143,7 @@ class ModifyTripButton extends React.Component {
         shape="round"
         icon={<EditOutlined />}
         size="small">
-        modify
+        Modify
       </Button>
     );
   }
@@ -152,7 +151,18 @@ class ModifyTripButton extends React.Component {
  
  
 class ManageTrip extends React.Component {
- 
+
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     loading: false,
+  //     data: [],
+  //   }
+  // }
+  // componentDidMount() {
+  //   this.loadData();
+  // }
+
   loadData = async () => {
     this.setState({
       loading: true,
@@ -198,6 +208,7 @@ class ManageTrip extends React.Component {
                 </Row>
               ),
             }}
+            // dataSource={this.state.data}
             dataSource={data}
           />
         </Col> 
@@ -224,6 +235,7 @@ class ManageTrip extends React.Component {
                 </Row>
               ),
             }}
+            // dataSource={this.state.data}
             dataSource={data}
           />
         </Col>  
