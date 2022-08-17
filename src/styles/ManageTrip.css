@@ -12,15 +12,7 @@
     font-size: 15px;
     font-weight: bold;
 }
- 
- 
-.timeline {
-    font-size: 18px;
-   
-}
- 
-
- 
+  
 .left-side {
     padding: 20px;
     width: 40%;
@@ -35,7 +27,14 @@
     margin-top: 20px;
     position: absolute;
 }
- 
+
+.hist1 {
+    width: 80%;
+    bottom: 15%;
+    left: 20%;
+    position: absolute;
+}
+
 .timelineobj {
     margin-left: 10px;
     margin-top: 20px;

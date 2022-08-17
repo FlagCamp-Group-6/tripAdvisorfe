@@ -1,12 +1,12 @@
-import { Table, Col, Button, Space, message, Popconfirm } from 'antd';
-import { saveTrip, getPOIFromTrip, getTripByID, getPlanFromTrip, delPOIFromTrip } from '../utils'
+import { Table, Col, Row, Button, Space, message, Popconfirm, Typography } from 'antd';
+import { saveTrip, getPOIFromTrip, getTripByID, getPlanFromTrip, delPOIFromTrip, getNewestTripIDByUser } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
-import update from 'immutability-helper';
+// import update from 'immutability-helper';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Map from './Map';
-import { ChakraProvider, theme } from '@chakra-ui/react'
-
+// import { ChakraProvider, theme } from '@chakra-ui/react'
+const { Text } = Typography;
 
 const type = 'DraggableBodyRow';
 
@@ -53,7 +53,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
   );
 };
 
-  const PlanTrip = ({curTrip}) => {
+  const PlanTrip = ({curTrip,setTrip}) => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
     const [beg_date, setBeg_date] = useState([]);
@@ -64,6 +64,14 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
 
     useEffect(() => {
       try {
+        console.log(curTrip);
+        if (curTrip==null || curTrip==-1) {
+          const resp = getNewestTripIDByUser().then((value) => {
+            console.log(value); 
+            setTrip(value);
+          });
+        }
+
         // const resp = getPOIFromTrip(curTrip).then((value) => {
         const resp1 = getTripByID(curTrip).then((value) => {
           console.log("trip looks like");
@@ -89,7 +97,8 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
                 const tempe = parseInt((finish-endhh)*60);
                 const endmm = (tempe<10?"0":"")+tempe;
                 testdata[idx]={
-                key: idx+1,
+                  key: idx+1,
+                  detail: {
                 day: i+1,
                 date: dateToString(mydate),
                 start_time: beghh+":"+begmm,
@@ -100,6 +109,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
                 latitude: plan[i][j].latitude,
                 longitude: plan[i][j].longitude,
                 id: plan[i][j].id,
+                  }
                 }
                 idx++;
                 time=finish+1.0;
@@ -131,76 +141,117 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
         row: DraggableBodyRow,
       },
     };
+    // const columns = [
+    //   {
+    //     title: 'Day',
+    //     dataIndex: 'day',
+    //     key: 'day',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'Date',
+    //     dataIndex: 'date',
+    //     key: 'date',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'Start Time',
+    //     dataIndex: 'start_time',
+    //     key: 'start_time',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'End Time',
+    //     dataIndex: 'end_time',
+    //     key: 'end_time',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'Recommmend Time',
+    //     dataIndex: 'time_taken',
+    //     key: 'time_taken',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'Point Of Interest',
+    //     dataIndex: 'name',
+    //     key: 'name',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   {
+    //     title: 'Address',
+    //     dataIndex: 'address',
+    //     key: 'address',
+    //     render: (text) => <h3 className="visit">{text}</h3>,
+    //   },
+    //   // Table.SELECTION_COLUMN,
+    //   {
+    //     title: 'Skip',
+    //     dataIndex: 'skip',
+    //     key: 'skip',
+    //     render: (_, record) => 
+    //       data.length >= 1 ? (
+    //         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+    //           <Button type='primary' shape='round'>Skip</Button>
+    //           {/* <a>Delete</a> */}
+    //         </Popconfirm>
+    //       ) : null,
+    //   },
+    // ]
+
     const columns = [
       {
-        title: 'Day',
-        dataIndex: 'day',
-        key: 'day',
-        render: (text) => <h3 className="visit">{text}</h3>,
+        title: 'Day-to-day description',
+        dataIndex: 'detail',
+        key: 'detail',
+        // render: (text) => <h3 className="visit"></h3>,
+        render: (record) => <>
+        <Typography.Title
+          level={5}
+          className = "list"
+        >
+          <Col span={8}>
+          Day {record.day} {record.date} 
+          </Col>
+          <Col span={8}>
+          {record.start_time} to {record.end_time}
+          </Col>
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+            <Button type='primary' shape='round'>Skip</Button>
+          </Popconfirm>
+        </Typography.Title>
+        <Text>
+          Suggest to take {record.time_taken} hours for
+        </Text>
+        <Typography.Title
+          level={5}
+        >
+        {record.name}
+        </Typography.Title>
+        <Text>
+        {record.address}
+        </Text>
+          </>,
       },
-      {
-        title: 'Date',
-        dataIndex: 'date',
-        key: 'date',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      {
-        title: 'Start Time',
-        dataIndex: 'start_time',
-        key: 'start_time',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      {
-        title: 'End Time',
-        dataIndex: 'end_time',
-        key: 'end_time',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      {
-        title: 'Recommmend Time',
-        dataIndex: 'time_taken',
-        key: 'time_taken',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      {
-        title: 'Point Of Interest',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-        render: (text) => <h3 className="visit">{text}</h3>,
-      },
-      // Table.SELECTION_COLUMN,
-      {
-        title: 'Skip',
-        dataIndex: 'skip',
-        key: 'skip',
-        render: (_, record) => 
-          data.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <Button type='primary' shape='round'>Skip</Button>
-              {/* <a>Delete</a> */}
-            </Popconfirm>
-          ) : null,
-      },
+
     ]
 
     // to delete poi from table
     const handleDelete = (key) => {
+      // const deleted = data.filter((item) => item.key===key);
+      // const poiid = deleted[0].id;
+      // delPOIFromTrip(poiid,curTrip);
+      // const newData = data.filter((item) => item.key !== key);
       const deleted = data.filter((item) => item.key===key);
-      const poiid = deleted[0].id;
+      const poiid = deleted[0].detail.id;
       delPOIFromTrip(poiid,curTrip);
       const newData = data.filter((item) => item.key !== key);
       changePlan(newData);
-      // setData(newData);
     };
 
     // to select poi from table to plot
     const onSelectChange = (newSelectedRowKeys) => {
+      console.log(newSelectedRowKeys);
       setSelectedRowKeys(newSelectedRowKeys);
     };  
     const rowSelection = {
@@ -213,11 +264,16 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       let day=1;
       let plan="D1#";
       for (let idx=0;idx<data.length;idx++) {
-        if (data[idx].day>day) {
+        // if (data[idx].day>day) {
+        //   day++;
+        //   plan=plan+",D"+day+"#";
+        // }
+        // plan=plan+data[idx].start_time+"-"+data[idx].end_time+":"+data[idx].id+"#";
+        if (data[idx].detail.day>day) {
           day++;
           plan=plan+",D"+day+"#";
         }
-        plan=plan+data[idx].start_time+"-"+data[idx].end_time+":"+data[idx].id+"#";
+        plan=plan+data[idx].detail.start_time+"-"+data[idx].detail.end_time+":"+data[idx].detail.id+"#";
       }
       setLoading(true);
       try {
@@ -270,12 +326,19 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       let curday=1;
       let curtime=10.0;
       for (let idx=0;idx<newdata.length;idx++) {
-        let finish = curtime+newdata[idx].time_taken;
-        if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].time_taken>=5.0 || newdata[idx].time_taken>=5.0)) {
+        // let finish = curtime+newdata[idx].time_taken;
+        // if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].time_taken>=5.0 || newdata[idx].time_taken>=5.0)) {
+        //   curtime=10.0;
+        //   mydate.setDate(mydate.getDate() + 1);
+        //   curday++;
+        //   finish=curtime+newdata[idx].time_taken;
+        // }
+        let finish = curtime+newdata[idx].detail.time_taken;
+        if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].detail.time_taken>=5.0 || newdata[idx].detail.time_taken>=5.0)) {
           curtime=10.0;
           mydate.setDate(mydate.getDate() + 1);
           curday++;
-          finish=curtime+newdata[idx].time_taken;
+          finish=curtime+newdata[idx].detail.time_taken;
         }
         console.log(idx);
         console.log(curday);
@@ -286,24 +349,41 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
         const endhh = parseInt(finish,10);
         const tempe = parseInt((finish-endhh)*60);
         const endmm = (tempe<10?"0":"")+tempe;
+        // testdata[idx]={
+        //   key: newdata[idx].key,
+        //   day: curday,
+        //   date: dateToString(mydate),
+        //   start_time: beghh+":"+begmm,
+        //   end_time: endhh+":"+endmm,
+        //   time_taken: newdata[idx].time_taken,
+        //   name: newdata[idx].name,
+        //   address: newdata[idx].address,
+        //   latitude: newdata[idx].latitude,
+        //   longitude: newdata[idx].longitude,
+        //   id: newdata[idx].id,
+        // }
+        // curtime+=newdata[idx].time_taken;
         testdata[idx]={
-          key: newdata[idx].key,
+          key: newdata[idx].detail.key,
+          detail: {
           day: curday,
           date: dateToString(mydate),
           start_time: beghh+":"+begmm,
           end_time: endhh+":"+endmm,
-          time_taken: newdata[idx].time_taken,
-          name: newdata[idx].name,
-          address: newdata[idx].address,
-          latitude: newdata[idx].latitude,
-          longitude: newdata[idx].longitude,
-          id: newdata[idx].id,
+          time_taken: newdata[idx].detail.time_taken,
+          name: newdata[idx].detail.name,
+          address: newdata[idx].detail.address,
+          latitude: newdata[idx].detail.latitude,
+          longitude: newdata[idx].detail.longitude,
+          id: newdata[idx].detail.id,
+          }
         }
-        curtime+=newdata[idx].time_taken;
+        curtime+=newdata[idx].detail.time_taken;
         curtime+=1.0;
       }
       setData(testdata);
     }
+
 
     return (
     <>
@@ -313,8 +393,22 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       shape="round"
       onClick={saveOnClick}
       > Save Changes</Button>
-      <h3> Trip starts on {beg_date}</h3>
-      <h3> Trip ends on {end_date}</h3>
+        <Typography.Title
+          level={3}
+          style={{
+            margin: 0,
+          }}
+        >
+          Trip starts on {beg_date}
+        </Typography.Title>
+        <Typography.Title
+          level={3}
+          style={{
+            margin: 0,
+          }}
+        >
+          Trip ends on {end_date}
+        </Typography.Title>
       </Space>
     <DndProvider backend={HTML5Backend}>
       <Table
@@ -334,9 +428,12 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
     </DndProvider>
     </Col>    
     <Col span={11} className="right-side">
-    <ChakraProvider theme={theme}>
+    {/* <ChakraProvider theme={theme}>
       <Map data={data} keys={selectedRowKeys}/>
-    </ChakraProvider>
+    </ChakraProvider> */}
+    <div style={{width: "100vm", height:"70vh"}}>
+    <Map data={data} keys={selectedRowKeys}/>
+    </div>
     </Col>
     </>
   )};

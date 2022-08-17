@@ -1,15 +1,13 @@
 import React from "react";
-import { Layout, Row, Typography, Space, message } from "antd";
+import { Layout, Row, Typography, Space } from "antd";
 import WhatsHot from './WhatsHot'
 import PlanTrip from './PlanTrip'
 import ManageTrip from './ManageTrip'
 import whats_hot from '../assets/icons/whats_hot.svg';
 import plan_trip from '../assets/icons/plan_trip.svg';
 import manage_trip from '../assets/icons/manage_trip.svg';
-import { getPOIByCity, getPOIByName, addPOIToTrip, initTrip, getNewestTripIDByUser, getPlanFromTrip } from '../utils';
 
 const { Sider, Content} = Layout;
-const showmax=6;
 
 class Main extends React.Component {
   constructor() {
@@ -17,13 +15,7 @@ class Main extends React.Component {
     this.state = {
       loading: false,
       activetab: 1,
-      POIList: [],
-      selected: [],
-      beg_date: null,
-      end_date: null,
-      home: "",
       curTrip: -1,
-      curShow: [],
     }
   }
   setTab1() {
@@ -42,112 +34,20 @@ class Main extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.loadPOI();
-  }
-
-  loadPOI = async () => {
+  setTrip = (tripid) => {
     this.setState({
-      loading: true,
-    });
-
-    try {
-      const resp = await getPOIByCity(this.props.city);
-      this.setState({
-        POIList: resp,
-      });
-      this.firstShowed(resp);
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-      this.setState({
-        loading: false,
-      });
-    }
-    // this.firstShowed(resp);
-  };
-
-  firstShowed = (input) => {
-    let show = [];
-    for (let i=0;i<input.length && i<showmax;i++) {
-        show[i]=input[i].id;
-    }
-    console.log(show);
-    this.setState({
-      curShow: show,
-    });
-  }
-
-  updatePOI = async (setting) => {
-    this.setState({
-      loading: true,
-    });
-    try {
-      const POIs = await getPOIByName(setting);
-      message.success("Successfully searched POIs");
-      const show = this.state.curShow;
-      const adding = POIs.length;
-      for (let i=show.length-1;i>=adding;i--) {
-        show[i]=show[i-adding];
-      }
-      for (let i=adding-1;i>=0;i--) {
-        show[i]=POIs[i].id;
-      }
-      this.setState({
-        curShow: show,
-      })
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-      this.setState({
-        loading: false,
-      });
-    }
-  }
-
-  buildTrip = async (setting) => {
-    this.setState({
-      home: setting.location,
-      beg_date: setting.beg_date,
-      end_date: setting.end_date,
-      loading: true,
-    });
-    var today = new Date();
-    var date = (today.getFullYear()-2022)*372+today.getMonth()*31+today.getDate();
-    var time = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds();
-    var dateTime = date*86400+time;    
-    console.log(dateTime);
-    console.log(setting.beg_date);
-
-    try {
-      await initTrip(setting.beg_date,setting.end_date,dateTime);
-      const resp = await getNewestTripIDByUser().then((value) => {
-        console.log(value); 
-        this.setState({
-          curTrip: value,
-        })
-        for (var i=0;i<this.state.selected.length;i++) {
-          addPOIToTrip(this.state.selected[i].id,value);
-        }
-        getPlanFromTrip(value);
-      });
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-      this.setState({
-        loading: false,
-      });
-    }
-  }
-
-  updateSelection = (input) => {
-    this.setState({
-      selected: input,
+      curTrip: tripid,
     })
   }
 
+  modifyTrip = (tripid) => {
+    console.log("modify trip");
+    this.setTrip(tripid);
+    this.setTab2();
+  }
+
   render() {
-    const { POIList, selected, beg_date, end_date, curShow, curTrip } = this.state;
+    const { curTrip, POIList, curShow } = this.state;
 
     return (
       <Layout
@@ -237,20 +137,18 @@ class Main extends React.Component {
         <Content
           style={{
             padding: '0px 24px',
-            minHeight: 2000,
+            minHeight: 1600,
           }}
         >
           <Row className="main">
             {this.state.activetab===1 && (
-            <WhatsHot POIList={POIList} selected={selected} showed={curShow} 
-            updatePOI={this.updatePOI} updateSelection={this.updateSelection} buildTrip={this.buildTrip} addTrip={this.addTrip}/>
+              <WhatsHot city={this.props.city} setTrip={this.setTrip}/>
             )}
             {this.state.activetab===2 && (
-                // <PlanTrip selected={selected} beg_date={beg_date} end_date={end_date} curTrip={curTrip}/>
-                <PlanTrip curTrip={curTrip}/>
+              <PlanTrip curTrip={curTrip} setTrip={this.setTrip}/>
             )}
             {this.state.activetab===3 && (
-                <ManageTrip />
+              <ManageTrip modifyTrip={this.modifyTrip}/>
             )}
           </Row>
         </Content>

@@ -26,3 +26,7 @@
     background: #fff;
     border-radius: 2px;
 }
+.list{
+    display: flex;
+    justify-content: space-between;
+}

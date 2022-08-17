@@ -23,17 +23,6 @@ class BuildTrip extends React.Component {
       this.props.buildTrip(formInstance.getFieldsValue(true));
     };
 
-    handleSearch2 = async () => {
-      const formInstance = this.formRef.current;
-   
-      try {
-        await formInstance.validateFields();
-      } catch (error) {
-        return;
-      }
-      this.props.addTrip(formInstance.getFieldsValue(true));
-    };
-
     render() {
       return (
         <div style={{ width: 900, fontSize: "30px" }}>

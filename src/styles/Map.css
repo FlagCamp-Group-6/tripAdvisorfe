@@ -1,0 +1,13 @@
+.maptxt {
+    background-color: white;
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.line {
+    display: flex;
+    justify-content: space-between;
+}

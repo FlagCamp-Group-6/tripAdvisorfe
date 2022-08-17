@@ -143,7 +143,41 @@ export const register = (credential) => {
       },
     }).then((response) => {
       if (response.status !== 200) {
-        throw Error("Fail to get trip ID by user");
+        throw Error("Fail to get trip by user");
+      }   
+      return response.json();
+    });
+  };
+
+  export const getUpcomingTripByUser = () => {
+    const authToken = localStorage.getItem("authToken");
+    const getTripUrl = `${domain}/trip/getUpcoming`;
+    console.log("get upcoming trip by user");
+    console.log(getTripUrl);
+    return fetch(getTripUrl, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      if (response.status !== 200) {
+        throw Error("Fail to get upcoming trip by user");
+      }   
+      return response.json();
+    });
+  };
+
+  export const getPastTripByUser = () => {
+    const authToken = localStorage.getItem("authToken");
+    const getTripUrl = `${domain}/trip/getPast`;
+    console.log("get past trip by user");
+    console.log(getTripUrl);
+    return fetch(getTripUrl, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      if (response.status !== 200) {
+        throw Error("Fail to get past trip by user");
       }   
       return response.json();
     });

@@ -1,11 +1,13 @@
 import React from 'react';
 import {GOOG_API_KEY, GMAP_BASE_URL} from "../constants";
+
 class DrawPoints extends React.Component {
     constructor(){
         super();
         this.state = {
             zoom: 10,
-            city: "34.053713,-118.242815",
+            // city: "34.053713,-118.242815",
+            city: "34.0,-118.34",
         };
     }
 

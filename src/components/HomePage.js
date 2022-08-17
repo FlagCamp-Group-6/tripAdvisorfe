@@ -33,25 +33,25 @@ class HomePage extends React.Component {
           <Card title={<h1>These are international alpha cities in U.S. </h1>}>
           <Carousel autoplay vertical="true">
             <div>
-            <Image src={fign1} height="500px" width="500px" alt="New York"/>
+            <Image src={fign1} height="600px" width="600px" alt="New York"/>
             </div>
             <div>
-            <Image src={figl1} height="500px" width="500px" alt="Los Angeles"/>
+            <Image src={figl1} height="600px" width="600px" alt="Los Angeles"/>
             </div>
             <div>
-            <Image src={figc1} height="500px" width="500px" alt="Chicago"/>
+            <Image src={figc1} height="600px" width="600px" alt="Chicago"/>
             </div>
             <div>
-            <Image src={figm1} height="500px" width="500px" alt="Miami"/>
+            <Image src={figm1} height="600px" width="600px" alt="Miami"/>
             </div>
             <div>
-            <Image src={figh1} height="500px" width="500px" alt="Houston"/>
+            <Image src={figh1} height="600px" width="600px" alt="Houston"/>
             </div>
             <div>
-            <Image src={figs1} height="500px" width="500px" alt="San Francisco"/>
+            <Image src={figs1} height="600px" width="600px" alt="San Francisco"/>
             </div>
             <div>
-            <Image src={figw1} height="500px" width="500px" alt="Washington D.C."/>
+            <Image src={figw1} height="600px" width="600px" alt="Washington D.C."/>
             </div>
           </Carousel>
           </Card>

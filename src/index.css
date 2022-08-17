@@ -1,17 +1,26 @@
 @import '~antd/dist/antd.css';
+@import "./styles/About.css";
 @import "./styles/App.css";
-@import "./styles/Main.css";
-@import "./styles/PageHeader.css";
-@import "./styles/PageFooter.css";
+@import "./styles/BuildTrip.css";
+@import "./styles/ContactUs.css";
+@import "./styles/DrawPoints.css";
+@import "./styles/Hist.css";
 @import "./styles/HomePage.css";
 @import "./styles/Login.css";
-@import "./styles/WhatsHot.css";
-@import "./styles/PlanTrip.css";
+@import "./styles/Main.css";
 @import "./styles/ManageTrip.css";
-@import "./styles/SearchPOI.css";
-@import "./styles/Recommendations.css";
-@import "./styles/DrawPoints.css";
+@import "./styles/Map.css";
+@import "./styles/PageFooter.css";
+@import "./styles/PageHeader.css";
+@import "./styles/PlanTrip.css";
 @import "./styles/POIDetailInfoButton.css";
+@import "./styles/PrivacyPolicy.css";
+@import "./styles/Recommendations.css";
+@import "./styles/SearchPOI.css";
+@import "./styles/SelectPOI.css";
+@import "./styles/TermOfUse.css";
+@import "./styles/WhatsHot.css";
+
 
 body {
   margin: 0;
