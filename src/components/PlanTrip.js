@@ -1,4 +1,4 @@
-import { Table, Col, Row, Button, Space, message, Popconfirm, Typography } from 'antd';
+import { Table, Col, Button, Space, message, Popconfirm, Typography } from 'antd';
 import { saveTrip, getPOIFromTrip, getTripByID, getPlanFromTrip, delPOIFromTrip, getNewestTripIDByUser } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 // import update from 'immutability-helper';
@@ -391,7 +391,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       <Button className="trip-save"
       shape="round"
       onClick={saveOnClick}
-      > Save Changes</Button>
+      > Save Plan</Button>
         <Typography.Title
           level={3}
           style={{

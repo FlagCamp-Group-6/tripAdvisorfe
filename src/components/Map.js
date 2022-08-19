@@ -11,7 +11,7 @@
 // } from '@chakra-ui/react'
 
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-import {Skeleton, Button, Space, Row, Typography} from "antd"
+import {Skeleton, Button, Typography} from "antd"
 
 import {
   useJsApiLoader,
