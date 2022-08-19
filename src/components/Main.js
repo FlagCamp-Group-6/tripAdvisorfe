@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Typography, Space } from "antd";
+import { Layout, Row, Typography } from "antd";
 import WhatsHot from './WhatsHot'
 import PlanTrip from './PlanTrip'
 import ManageTrip from './ManageTrip'
@@ -56,83 +56,71 @@ class Main extends React.Component {
         }}
       >
         <Sider className="site-layout-background" width={100}>
-          <Space direction='vertical'>
+          <div className = "sidebar">
             {this.state.activetab === 1 && (
-              <>
-                <div className="optionselected">
-                  <img src={whats_hot} className="Nav_01" alt="icon" />
-                </div>
+              <div className="optionselected">
+                <img src={whats_hot} className="Nav_01" alt="icon" />
                 <Typography.Title
-                  level={3}
-                  style={{ margin: 0 }}>
-                  What's Hot
-                </Typography.Title>
-              </>
+                level={3}
+                style={{ margin: 0 }}>
+                What's Hot
+              </Typography.Title>
+              </div>
             )}
             {this.state.activetab !== 1 && (
-              <>
-                <div className="option" onClick={this.setTab1.bind(this)}>
-                  <img src={whats_hot} className="Nav_01" alt="icon" />
-                </div>
+              <div className="option" onClick={this.setTab1.bind(this)}>
+                <img src={whats_hot} className="Nav_01" alt="icon" />
                 <Typography.Title
-                  type="secondary"
-                  level={3}
-                  style={{ margin: 0 }}>
-                  What's Hot
-                </Typography.Title>
-              </>
+                type="secondary"
+                level={3}
+                style={{ margin: 0 }}>
+                What's Hot
+              </Typography.Title>
+              </div>
             )}
             {this.state.activetab === 2 && (
-              <>
-                <div className="optionselected">
-                  <img src={plan_trip} className="Nav_02" alt="icon" />
-                </div>
+              <div className="optionselected">
+                <img src={plan_trip} className="Nav_02" alt="icon" />
                 <Typography.Title
-                  level={3}
-                  style={{ margin: 0 }}>
-                  Plan My Trip
-                </Typography.Title>
-              </>
+                level={3}
+                style={{ margin: 0 }}>
+                Plan My Trip
+              </Typography.Title>
+              </div>
             )}
             {this.state.activetab !== 2 && (
-              <>
-                <div className="option" onClick={this.setTab2.bind(this)}>
-                  <img src={plan_trip} className="Nav_02" alt="icon" />
-                </div>
+              <div className="option" onClick={this.setTab2.bind(this)}>
+                <img src={plan_trip} className="Nav_02" alt="icon" />
                 <Typography.Title
-                  type="secondary"
-                  level={3}
-                  style={{ margin: 0 }}>
-                  Plan My Trip
-                </Typography.Title>
-              </>
+                type="secondary"
+                level={3}
+                style={{ margin: 0 }}>
+                Plan My Trip
+              </Typography.Title>
+              </div>
             )}
             {this.state.activetab === 3 && (
-              <>
-                <div className="optionselected">
-                  <img src={manage_trip} className="Nav_03" alt="icon" />
-                </div>
+              <div className="optionselected">
+                <img src={manage_trip} className="Nav_03" alt="icon" />
                 <Typography.Title
-                  level={3}
-                  style={{ margin: 0 }}>
-                  Manage Trip
-                </Typography.Title>
-              </>
+                level={3}
+                style={{ margin: 0 }}>
+                Manage Trip
+              </Typography.Title>
+              </div>
             )}
             {this.state.activetab !== 3 && (
-              <>
-                <div className="option" onClick={this.setTab3.bind(this)}>
-                  <img src={manage_trip} className="Nav_03" alt="icon" />
-                </div>
+              <div className="option" onClick={this.setTab3.bind(this)}>
+                <img src={manage_trip} className="Nav_03" alt="icon" />
                 <Typography.Title
-                  type="secondary"
-                  level={3}
-                  style={{ margin: 0 }}>
-                  Manage Trip
-                </Typography.Title>
-              </>
+                type="secondary"
+                level={3}
+                style={{ margin: 0 }}>
+                Manage Trip
+              </Typography.Title>
+              </div>
             )}
-          </Space>
+            </div>
         </Sider>
         <Content
           style={{

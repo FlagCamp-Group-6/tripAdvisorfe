@@ -37,3 +37,9 @@ h3.ant-typography{
 .main {
     margin-bottom: 50px;
 }
+.sidebar {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
