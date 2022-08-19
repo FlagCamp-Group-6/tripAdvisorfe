@@ -204,8 +204,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
         title: 'Day-to-day description',
         dataIndex: 'detail',
         key: 'detail',
-        // render: (text) => <h3 className="visit"></h3>,
-        render: (record) => <>
+        render: (record,line) => <>
         <Typography.Title
           level={5}
           className = "list"
@@ -216,7 +215,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           <Col span={8}>
           {record.start_time} to {record.end_time}
           </Col>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(line.key)}>
             <Button type='primary' shape='round'>Skip</Button>
           </Popconfirm>
         </Typography.Title>

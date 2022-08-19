@@ -121,17 +121,21 @@ class ManageTrip extends React.Component {
       stat: [],
     });
     try {
-      const resp1 = await getUpcomingTripByUser().then((value) => {        
+      // const resp1 = await getUpcomingTripByUser().then((value) => {        
+      //   console.log(value);
+      //   this.setState({
+      //     datau: this.getTable(value,"Upcoming"),
+      //   });
+      // })
+      // const resp2 = await getPastTripByUser().then((value) => {        
+      //   console.log(value);
+      //   this.setState({
+      //     datap: this.getTable(value,"Past"),
+      //   });
+      // })
+      const resp = await getTripByUser().then((value) => {        
         console.log(value);
-        this.setState({
-          datau: this.getTable(value,"Upcoming"),
-        });
-      })
-      const resp2 = await getPastTripByUser().then((value) => {        
-        console.log(value);
-        this.setState({
-          datap: this.getTable(value,"Past"),
-        });
+        this.getTable(value);
       })
     } catch (error) {
       message.error(error.message);
@@ -150,12 +154,18 @@ class ManageTrip extends React.Component {
   dateToString = (date) => {
     return date.toDateString();
   };
-
-  getTable = (value,label) => {
-    let testdata = [];
+  // getTable = (value,label) => {
+  getTable = (value) => {
+    const today = new Date();
+    let testdatau = [];
+    let testdatap = [];
+    // let testdata = [];
     let statistics = this.state.stat;
+    let idxu = 0, idxp = 0;
     for (let i=0;i<value.length;i++) {
-      testdata[i] = {
+      let mydate = this.stringToDate(value[i].checkin);
+      let nodate = this.stringToDate(value[i].checkout);
+      let line = {
         key: i+1,
         name: value[i].name,
         destination: 'LA',
@@ -166,9 +176,23 @@ class ManageTrip extends React.Component {
         plan: value[i].plan,
         itinerary: [],
       }
-      let mydate = this.stringToDate(testdata[i].beg_date);
+      // testdata[i] = line;
+      let tt = "";
+      console.log(nodate);
+      console.log(today);
+      if (nodate<today) {
+        testdatap[idxp++]=line;
+        tt="past";
+      } else {
+        testdatau[idxu++]=line;
+        tt="upcoming";
+      }
+      console.log(idxp);
+      console.log(idxu);
+      // let mydate = this.stringToDate(testdata[i].beg_date);
       let idx=0,day=0;
-      let plan = testdata[i].plan;
+      // let plan = testdata[i].plan;
+      let plan = line.plan;
       console.log(plan);
       for (let j=0;j<plan.length;j++) {
         if (j==0 || plan[j]===',') {
@@ -184,20 +208,28 @@ class ManageTrip extends React.Component {
         while (plan[tmp]!='#') {
           val=val*10+(plan[tmp++]-'0');        
         }
-        let poi = testdata[i].poiSet.filter((item)=>item.id===val);
-        const found = statistics.some((item)=>item.id===val && item.type===label);
+        // let poi = testdata[i].poiSet.filter((item)=>item.id===val);
+        let poi = line.poiSet.filter((item)=>item.id===val);
+        console.log("poi");
+        console.log(poi[0]);
+        // const found = statistics.some((item)=>item.id===val && item.type===label);
+        const found = statistics.some((item)=>item.id===val && item.type===tt);
         if (found) {
-          statistics.filter((item)=>{return item.id===val && item.type===label})[0].count++;
+          // statistics.filter((item)=>{return item.id===val && item.type===label})[0].count++;
+          statistics.filter((item)=>{return item.id===val && item.type===tt})[0].count++;
         } else {
           const item = {
             id: val,
             name: poi[0].name,
-            type: label,
+            // type: label,
+            type: tt,
             count: 1,
           }
           statistics=[...statistics,item];
         }
-        testdata[i].itinerary[idx++]={
+        console.log( plan );
+        // testdata[i].itinerary[idx++]={
+        line.itinerary[idx++]={
           day: day,
           date: this.dateToString(mydate),
           beg_time: plan.substring(j,j+5),
@@ -210,9 +242,11 @@ class ManageTrip extends React.Component {
     console.log("stat");
     this.setState({
       stat: statistics,
+      datap: testdatap,
+      datau: testdatau,
     })
     console.log(this.state.stat);
-    return testdata;
+    // return testdata;
   }
 
   render() {
