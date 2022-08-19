@@ -1,5 +1,5 @@
 import { Table, Col, Button, Space, message, Popconfirm, Typography } from 'antd';
-import { saveTrip, getPOIFromTrip, getTripByID, getPlanFromTrip, delPOIFromTrip, getNewestTripIDByUser } from '../utils'
+import { saveTrip, getTripByID, getPlanFromTrip, delPOIFromTrip, getNewestTripIDByUser } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 // import update from 'immutability-helper';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
@@ -60,6 +60,9 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
     const [end_date, setEnd_date] = useState([]);    
     const [poiSet, setPoiSet] = useState([]);
     const [data, setData] = useState ([]);
+    const [deleting, setDeleting] = useState([]);
+    const [name, setName] = useState("");
+    const [plan, setPlan] = useState("");
     const [curPlan, setCurPlan] = useState([]);
 
     useEffect(() => {
@@ -72,52 +75,95 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           });
         }
 
-        // const resp = getPOIFromTrip(curTrip).then((value) => {
         const resp1 = getTripByID(curTrip).then((value) => {
           console.log("trip looks like");
           console.log(value);
           let mydate = stringToDate(value.checkin);
+          setName(value.name);
           setBeg_date(value.checkin);
           setEnd_date(value.checkout);
           setPoiSet(value.poiSet);
-          const resp2 = getPlanFromTrip(curTrip).then((plan) => {
-            setCurPlan(plan);
-            console.log("plan looks like");
-            console.log(plan);
-            let testdata = [];
-            let idx=0;
-            for (let i=0;i<plan.length;i++) {
-              let time=10.0;
-              for (let j=0;j<plan[i].length;j++) {
-                const beghh = parseInt(time,10);
-                const tempb = parseInt((time-beghh)*60);
-                const begmm = (tempb<10?"0":"")+tempb;
-                const finish = time+plan[i][j].timeTaken;
-                const endhh = parseInt(finish,10);
-                const tempe = parseInt((finish-endhh)*60);
-                const endmm = (tempe<10?"0":"")+tempe;
-                testdata[idx]={
-                  key: idx+1,
-                  detail: {
-                day: i+1,
-                date: dateToString(mydate),
-                start_time: beghh+":"+begmm,
-                end_time: endhh+":"+endmm,
-                time_taken: plan[i][j].timeTaken,
-                name: plan[i][j].name,
-                address: plan[i][j].address,
-                latitude: plan[i][j].latitude,
-                longitude: plan[i][j].longitude,
-                id: plan[i][j].id,
-                  }
-                }
-                idx++;
-                time=finish+1.0;
-              }
+          setPlan(value.plan);
+          console.log("plan in string "+value.plan);
+          console.log("poiset is");
+          console.log(poiSet);
+          console.log(value.poiSet);
+          const vp = value.plan;
+          let idx=0,day=0;
+          let testdata = [];
+          mydate.setDate(mydate.getDate() - 1);
+          for (let i=0;i<vp.length;i++) {
+            if (i===0 || vp[i]===',') {
+              while (vp[i]!=='#') {i++;}
+              i++;day++;
               mydate.setDate(mydate.getDate() + 1);
             }
-            setData(testdata);
-          });
+            const sbeg = vp.substring(i,i+5);
+            const send = vp.substring(i+6,i+11);
+            i+=12;
+            let num=0;
+            while (vp[i]!=='#') {
+              num=num*10+(vp[i++]-'0');
+            }
+            console.log(num);
+            const poi = value.poiSet.filter((item) => item.id === num);
+            console.log("poi is");
+            console.log(poi);
+            testdata[idx++]={
+              key: idx+1,
+              detail: {
+                day: day,
+                date: dateToString(mydate),
+                start_time: sbeg,
+                end_time: send,
+                time_taken: poi[0].timeTaken,
+                name: poi[0].name,
+                address: poi[0].address,
+                latitude: poi[0].latitude,
+                longitude: poi[0].longitude,
+                id: num,
+              }
+            }
+          }
+          console.log(testdata);
+          setData(testdata);
+          // const resp2 = getPlanFromTrip(curTrip).then((plan) => {
+          //   setCurPlan(plan);
+          //   console.log("plan in list "+plan);
+          //   let testdata = [];
+          //   let idx=0;
+          //   for (let i=0;i<plan.length;i++) {
+          //     let time=10.0;
+          //     for (let j=0;j<plan[i].length;j++) {
+          //       const beghh = parseInt(time,10);
+          //       const tempb = parseInt((time-beghh)*60);
+          //       const begmm = (tempb<10?"0":"")+tempb;
+          //       const finish = time+plan[i][j].timeTaken;
+          //       const endhh = parseInt(finish,10);
+          //       const tempe = parseInt((finish-endhh)*60);
+          //       const endmm = (tempe<10?"0":"")+tempe;
+          //       testdata[idx]={
+          //         key: idx+1,
+          //         detail: {
+          //           day: i+1,
+          //           date: dateToString(mydate),
+          //           start_time: beghh+":"+begmm,
+          //           end_time: endhh+":"+endmm,
+          //           time_taken: plan[i][j].timeTaken,
+          //           name: plan[i][j].name,
+          //           address: plan[i][j].address,
+          //           latitude: plan[i][j].latitude,
+          //           longitude: plan[i][j].longitude,
+          //           id: plan[i][j].id,
+          //         }
+          //       }
+          //       idx++;
+          //       time=finish+1.0;
+          //     } // end for j
+          //     mydate.setDate(mydate.getDate() + 1);
+          //   } // end for i
+          //   setData(testdata);
+          // });
         });
       } catch (error) {
         message.error(error.message);
@@ -201,7 +247,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
 
     const columns = [
       {
-        title: 'Day-to-day description',
+        title: `Day-to-day description of trip ${name} with ID ${curTrip} starting from ${beg_date} to ${end_date}`,
         dataIndex: 'detail',
         key: 'detail',
         render: (record,line) => <>
@@ -237,13 +283,13 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
 
     // to delete poi from table
     const handleDelete = (key) => {
-      // const deleted = data.filter((item) => item.key===key);
-      // const poiid = deleted[0].id;
+      const del = data.filter((item) => item.key===key);
+      // const poiid = del[0].id;
+      const poiid = del[0].detail.id;
+      let deleted = deleting;
+      deleted = [...deleted, poiid];
+      setDeleting(deleted);
       // delPOIFromTrip(poiid,curTrip);
-      // const newData = data.filter((item) => item.key !== key);
-      const deleted = data.filter((item) => item.key===key);
-      const poiid = deleted[0].detail.id;
-      delPOIFromTrip(poiid,curTrip);
       const newData = data.filter((item) => item.key !== key);
       changePlan(newData);
     };
@@ -258,16 +304,22 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       onChange: onSelectChange,
     };
 
-    // to save updated plan
+    // to reset trip
+    const resetOnClick = () => {
+      console.log(curTrip);
+      setTrip(-1);
+    }
+
+    // to save updated trip
     const saveOnClick = async () => {
+
+      const res = deleting.map((item) => {
+        delPOIFromTrip(item,curTrip);
+      });
+
       let day=1;
       let plan="D1#";
       for (let idx=0;idx<data.length;idx++) {
-        // if (data[idx].day>day) {
-        //   day++;
-        //   plan=plan+",D"+day+"#";
-        // }
-        // plan=plan+data[idx].start_time+"-"+data[idx].end_time+":"+data[idx].id+"#";
         if (data[idx].detail.day>day) {
           day++;
           plan=plan+",D"+day+"#";
@@ -325,13 +377,6 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       let curday=1;
       let curtime=10.0;
       for (let idx=0;idx<newdata.length;idx++) {
-        // let finish = curtime+newdata[idx].time_taken;
-        // if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].time_taken>=5.0 || newdata[idx].time_taken>=5.0)) {
-        //   curtime=10.0;
-        //   mydate.setDate(mydate.getDate() + 1);
-        //   curday++;
-        //   finish=curtime+newdata[idx].time_taken;
-        // }
         let finish = curtime+newdata[idx].detail.time_taken;
         if (idx>0 && (finish>18.0 || dif<=0 || newdata[idx-1].detail.time_taken>=5.0 || newdata[idx].detail.time_taken>=5.0)) {
           curtime=10.0;
@@ -339,31 +384,14 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           curday++;
           finish=curtime+newdata[idx].detail.time_taken;
         }
-        console.log(idx);
-        console.log(curday);
-        console.log(curtime);
         const beghh = parseInt(curtime,10);
         const tempb = parseInt((curtime-beghh)*60);
         const begmm = (tempb<10?"0":"")+tempb;
         const endhh = parseInt(finish,10);
         const tempe = parseInt((finish-endhh)*60);
         const endmm = (tempe<10?"0":"")+tempe;
-        // testdata[idx]={
-        //   key: newdata[idx].key,
-        //   day: curday,
-        //   date: dateToString(mydate),
-        //   start_time: beghh+":"+begmm,
-        //   end_time: endhh+":"+endmm,
-        //   time_taken: newdata[idx].time_taken,
-        //   name: newdata[idx].name,
-        //   address: newdata[idx].address,
-        //   latitude: newdata[idx].latitude,
-        //   longitude: newdata[idx].longitude,
-        //   id: newdata[idx].id,
-        // }
-        // curtime+=newdata[idx].time_taken;
         testdata[idx]={
-          key: newdata[idx].detail.key,
+          key: newdata[idx].key,
           detail: {
           day: curday,
           date: dateToString(mydate),
@@ -387,19 +415,15 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
     return (
     <>
     <Col span={13} className="left-side">
-      <Space className="top-line">
+      <Space>
       <Button className="trip-save"
       shape="round"
       onClick={saveOnClick}
-      > Save Plan</Button>
-        <Typography.Title
-          level={3}
-          style={{
-            margin: 0,
-          }}
-        >
-          Trip starts from {beg_date} to {end_date}
-        </Typography.Title>
+      > Save Trip</Button>
+      <Button className="trip-reset"
+      shape="round"
+      onClick={resetOnClick}
+      > Reset Trip</Button>
       </Space>
     <DndProvider backend={HTML5Backend}>
       <Table

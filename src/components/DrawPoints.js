@@ -125,15 +125,15 @@ class DrawPoints extends React.Component {
                 <Col span={8}>
                 <Radio.Group options={options} onChange={this.onChange} value={this.state.type} optionType="button" buttonStyle="solid" />
                 </Col>
-                <Col span={2} offset={1}>
+                <Col span={2} >
                 <Tooltip title="zoom-out">
                 <Button type="primary" shape="circle" icon={<MinusCircleFilled />} onClick={this.zoomout}/>
                 </Tooltip>    
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                 <Slider min={5} max={15} onChange={this.setValue} value={this.state.zoom} />
                 </Col>
-                <Col span={2} offset={1}>
+                <Col span={2}>
                 <Tooltip title="zoom-in">
                 <Button type="primary" shape="circle" icon={<PlusCircleFilled />} onClick={this.zoomin} />
                 </Tooltip>

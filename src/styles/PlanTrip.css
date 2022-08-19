@@ -14,9 +14,12 @@
     background: #484751;
     color: #ffffff;
 }
-.top-line{
+.trip-reset{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    background: #7788bb;
+    color: #ffffff;
 }
 .ant-table-thead{
     background: #484751;
@@ -33,4 +36,8 @@
 .firstline{
     display: flex;
     justify-content: space-between;
+}
+#info {
+    margin-top: 20px;
+    position: absolution;
 }

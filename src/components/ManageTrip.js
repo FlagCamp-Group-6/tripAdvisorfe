@@ -178,8 +178,6 @@ class ManageTrip extends React.Component {
       }
       // testdata[i] = line;
       let tt = "";
-      console.log(nodate);
-      console.log(today);
       if (nodate<today) {
         testdatap[idxp++]=line;
         tt="past";
@@ -210,6 +208,7 @@ class ManageTrip extends React.Component {
         }
         // let poi = testdata[i].poiSet.filter((item)=>item.id===val);
         let poi = line.poiSet.filter((item)=>item.id===val);
+        console.log(line.tripid);
         console.log("poi");
         console.log(poi[0]);
         // const found = statistics.some((item)=>item.id===val && item.type===label);

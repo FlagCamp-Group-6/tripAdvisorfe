@@ -45,7 +45,10 @@
     position: relative;
   }
 .carousel {
-  bottom: 40%;
-  right: 5%;
-  position: fixed;
+  top: 10%;
+  right: 2%;
+  position: absolute;
+}
+#card {
+  background-color: rgba(0, 255, 255, 0);
 }
