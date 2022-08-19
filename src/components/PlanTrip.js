@@ -207,7 +207,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
         render: (record,line) => <>
         <Typography.Title
           level={5}
-          className = "list"
+          className = "firstline"
         >
           <Col span={8}>
           Day {record.day} {record.date} 
@@ -220,7 +220,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           </Popconfirm>
         </Typography.Title>
         <Text>
-          Suggest to take {record.time_taken} hours for
+          Take {record.time_taken} hours for
         </Text>
         <Typography.Title
           level={5}
@@ -387,7 +387,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
     return (
     <>
     <Col span={13} className="left-side">
-      <Space>
+      <Space className="top-line">
       <Button className="trip-save"
       shape="round"
       onClick={saveOnClick}
@@ -398,15 +398,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
             margin: 0,
           }}
         >
-          Trip starts on {beg_date}
-        </Typography.Title>
-        <Typography.Title
-          level={3}
-          style={{
-            margin: 0,
-          }}
-        >
-          Trip ends on {end_date}
+          Trip starts from {beg_date} to {end_date}
         </Typography.Title>
       </Space>
     <DndProvider backend={HTML5Backend}>
@@ -430,7 +422,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
     {/* <ChakraProvider theme={theme}>
       <Map data={data} keys={selectedRowKeys}/>
     </ChakraProvider> */}
-    <div style={{width: "100vm", height:"70vh"}}>
+    <div style={{width: "100vm", height:"60vh"}}>
     <Map data={data} keys={selectedRowKeys}/>
     </div>
     </Col>
