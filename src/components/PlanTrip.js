@@ -418,13 +418,15 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
       <Space>
       <Button className="trip-save"
       shape="round"
-      onClick={saveOnClick}
+      // onClick={saveOnClick}
+      onClick = {(e) => {e.currentTarget.blur();saveOnClick();}}
       > Save Trip</Button>
       <Button className="trip-reset"
       shape="round"
-      onClick={resetOnClick}
+      // onClick={resetOnClick}
+      onClick = {(e) => {e.currentTarget.blur();resetOnClick();}}
       > Reset Trip</Button>
-      </Space>
+      </Space>      
     <DndProvider backend={HTML5Backend}>
       <Table
         className="visittable"
