@@ -31,7 +31,7 @@ class DrawPoints extends React.Component {
             longitude: -118.35,
             latitude: 34.05,
             hor: 400,
-            ver: 400,
+            ver: 360,
             scale: 2,
             type: 'roadmap',
         };
@@ -125,19 +125,6 @@ class DrawPoints extends React.Component {
                 <Col span={8}>
                 <Radio.Group options={options} onChange={this.onChange} value={this.state.type} optionType="button" buttonStyle="solid" />
                 </Col>
-                <Col span={2} >
-                <Tooltip title="zoom-out">
-                <Button type="primary" shape="circle" icon={<MinusCircleFilled />} onClick={this.zoomout}/>
-                </Tooltip>    
-                </Col>
-                <Col span={6}>
-                <Slider min={5} max={15} onChange={this.setValue} value={this.state.zoom} />
-                </Col>
-                <Col span={2}>
-                <Tooltip title="zoom-in">
-                <Button type="primary" shape="circle" icon={<PlusCircleFilled />} onClick={this.zoomin} />
-                </Tooltip>
-                </Col>
                 </Row>
                 <Row className = 'maprow'>
                 <img src={this.processUrl()} className='pointmap'/>
@@ -148,6 +135,12 @@ class DrawPoints extends React.Component {
                 <Button type="primary" shape="circle" icon={<FaLocationArrow />} onClick={this.reset} id='reset'/>
                 <Button type="primary" shape="circle" icon={<CaretRightOutlined />} onClick={this.moveright} id='moveright' />
                 <Button type="primary" shape="circle" icon={<CaretDownOutlined />} onClick={this.movedown} id='movedown'/>
+                <Tooltip title="zoom-in">
+                <Button type="primary" shape="circle" icon={<PlusCircleFilled />} onClick={this.zoomin} id='zoomin'/>
+                </Tooltip>
+                <Tooltip title="zoom-out">
+                <Button type="primary" shape="circle" icon={<MinusCircleFilled />} onClick={this.zoomout} id='zoomout'/>
+                </Tooltip>  
                 </Row>
             </div>
         );}

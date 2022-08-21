@@ -28,7 +28,8 @@ class HomePage extends React.Component {
     >
         <Row>
         <Col span={12}>
-        <img src={usmap} alt="Have a nice trip" className="usamap" title="Where is your favoriate destination" width="1534" height="949" />
+        {/* <img src={usmap} alt="Have a nice trip" className="usamap" title="Where is your favoriate destination" width="1534" height="949" /> */}
+        <img src={usmap} alt="Have a nice trip" className="usamap" title="Where is your favoriate destination" width="1200" height="800" />
         <Radio.Group name="cities" defaultValue={1} onChange={this.radioChangeHandler} className="radiogroup1">
             <Radio value={1} className='radio1'><h3>New York</h3></Radio>
             <Radio value={2} className='radio2'><h3>Los Angeles</h3></Radio>

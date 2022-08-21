@@ -1,4 +1,5 @@
 import { Table, Col, Button, Space, message, Popconfirm, Typography } from 'antd';
+import { DeleteOutlined } from "@ant-design/icons";
 import { saveTrip, getTripByID, getPlanFromTrip, delPOIFromTrip, getNewestTripIDByUser } from '../utils'
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 // import update from 'immutability-helper';
@@ -86,7 +87,6 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           setPlan(value.plan);
           console.log("plan in string "+value.plan);
           console.log("poiset is");
-          console.log(poiSet);
           console.log(value.poiSet);
           const vp = value.plan;
           let idx=0,day=0;
@@ -262,7 +262,7 @@ const DraggableBodyRow = ({ index, moveRow, className, style, ...restProps }) =>
           {record.start_time} to {record.end_time}
           </Col>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(line.key)}>
-            <Button type='primary' shape='round'>Skip</Button>
+            <Button shape='round' icon={<DeleteOutlined />} />
           </Popconfirm>
         </Typography.Title>
         <Text>

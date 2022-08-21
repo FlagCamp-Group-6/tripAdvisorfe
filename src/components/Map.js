@@ -25,7 +25,8 @@ import {
 import { useRef, useState, useEffect } from 'react'
 import {GOOG_API_KEY2} from "../constants";
 const { Text } = Typography;
-const center = { lat: 34.098907, lng: -118.327759 }
+const center = { lat: 34.098907, lng: -118.327759 };
+const dest = { lat: 34.099, lng: -118.327 };
 
 // const origin = 'Manhattan Beach Pier';
 // const destination = 'Los Angeles County Museum of Art' ;
@@ -60,7 +61,7 @@ function Map({data,keys}) {
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
   const [origin, setOrigin] = useState(center);
-  const [destination, setDestination] = useState(center);
+  const [destination, setDestination] = useState(dest);
   const [waypoints, setWaypoints] = useState([]);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
@@ -86,6 +87,8 @@ function Map({data,keys}) {
     setWaypoints(newWaypoints);
     console.log("waypoints");
     console.log(waypoints);
+    console.log(origin);
+    console.log(destination);
   }, [keys])
 
   if (!isLoaded) {

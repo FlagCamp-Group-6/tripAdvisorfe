@@ -90,18 +90,26 @@ class WhatsHot extends React.Component {
 
   buildTrip = async (setting) => {
     this.setState({
-      home: setting.location,
       loading: true,
     });
-    var today = new Date();
-    var date = (today.getFullYear()-2022)*372+today.getMonth()*31+today.getDate();
-    var time = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds();
-    var dateTime = date*86400+time;    
-    console.log(dateTime);
-    console.log(setting.beg_date);
+    let inputhome = setting.location;
+    if (inputhome==="") {inputhome="2350 Mission College Blvd #840, Santa Clara, CA";}
+    this.setState({
+      home: inputhome,
+    })
+
+    let tripname = setting.name;
+    if (tripname==="") {
+      var today = new Date();
+      var date = (today.getFullYear()-2022)*372+today.getMonth()*31+today.getDate();
+      var time = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds();
+      var dateTime = date*86400+time;    
+      console.log(dateTime);
+      tripname=dateTime;
+    }
 
     try {
-      await initTrip(setting.beg_date,setting.end_date,dateTime);
+      await initTrip(setting.beg_date,setting.end_date,tripname);
       const resp = await getNewestTripIDByUser().then((value) => {
         console.log(value); 
         this.props.setTrip(value);

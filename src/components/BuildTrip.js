@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Input, Space, DatePicker, Row } from "antd";
-import { HomeOutlined, ScheduleOutlined } from "@ant-design/icons";
+import { HomeOutlined, FileAddOutlined } from "@ant-design/icons";
 
 class BuildTrip extends React.Component {
     formRef = React.createRef();
@@ -30,10 +30,30 @@ class BuildTrip extends React.Component {
             <Row>
             <Space>
             <Form.Item 
+              name="name"              
+              rules={[
+                {
+                  required: false,
+                  message: "Please input a trip name",
+                },
+              ]}
+            >
+              <Input
+                size="large"
+                style={{
+                    width: '200px',
+                  }}
+                disabled={this.state.loading}
+                prefix={<FileAddOutlined/>}
+                placeholder=" Input your trip name"
+              />
+            </Form.Item>
+
+            <Form.Item 
               name="location"              
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "Please input your night location!",
                 },
               ]}
@@ -41,7 +61,7 @@ class BuildTrip extends React.Component {
               <Input
                 size="large"
                 style={{
-                    width: '600px',
+                    width: '400px',
                   }}
                 disabled={this.state.loading}
                 prefix={<HomeOutlined/>}
